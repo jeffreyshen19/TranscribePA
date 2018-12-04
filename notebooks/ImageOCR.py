@@ -90,6 +90,3 @@ class ImageOCR:
             "lines": lines,
             "raw": raw
         }
-
-ocr = ImageOCR()
-ocr.annotate('../data/scans/StearnsCorrFolder1956_001A.jpg', '../output/transcribed/StearnsCorrFolder1956_001A.json')
