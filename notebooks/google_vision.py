@@ -5,70 +5,91 @@
 
 import io
 import os
+import json
 
 from google.cloud import vision
 from google.cloud.vision import types
-from pprint import pprint
 
-# Instantiates a client
-client = vision.ImageAnnotatorClient()
+## Instantiates an image transcriber
+class ImageOCR:
+    def __init__(self):
+        self.client = vision.ImageAnnotatorClient()
 
-# The name of the image file to annotate
-file_name = os.path.join(
-    os.path.dirname(__file__),
-    '../data/scans/StearnsCorrFolder1956_001A.jpg')
+    def annotate(self, path, outputPath):
+        file_name = os.path.join(os.path.dirname(__file__), path)
+        output_file_name = os.path.join(os.path.dirname(__file__), outputPath)
 
-# Loads the image into memory
-with io.open(file_name, 'rb') as image_file:
-    content = image_file.read()
+        with io.open(file_name, 'rb') as image_file: # Loads the image into memory
+            content = image_file.read()
 
-image = types.Image(content=content)
+        image = types.Image(content=content)
 
-# Performs label detection on the image file
-response = client.label_detection(image=image)
-# labels = response.label_annotations
-#
-# print('Labels:')
-# for label in labels:
-#     print(label.description)
+        # Process the Images
+        data = {}
+        if self.isHandwritten(image):
+            print("Transcribing", path, " (HANDWRITTEN)")
+            data = self.handwrittenOCR(image)
+        else:
+            print("Transcribing", path, " (TYPED)")
+            data = self.typedOCR(image)
 
-# Performs document detection
-response = client.document_text_detection(image=image)
-# print(response.full_text_annotation.text)
+        # Write to JSON
+        with open(output_file_name, 'w+') as outfile:
+            json.dump(data, outfile)
 
-breaks = vision.enums.TextAnnotation.DetectedBreak.BreakType
-paragraphs = []
-lines = []
+    def isHandwritten(self, image): #Returns whether the API says the image has handwriting in it
+        response = self.client.label_detection(image=image)
+        labels = response.label_annotations
 
-annotation = response.full_text_annotation
+        # If the labels include "handwriting", it's considered handwritten
+        for label in labels:
+            if label.description == "handwriting":
+                return True
 
-for page in annotation.pages:
-    for block in page.blocks:
-        for paragraph in block.paragraphs:
-            para = ""
-            line = ""
-            for word in paragraph.words:
-                for symbol in word.symbols:
-                    line += symbol.text
-                    if symbol.property.detected_break.type == breaks.SPACE:
-                        line += ' '
-                    if symbol.property.detected_break.type == breaks.EOL_SURE_SPACE:
-                        line += ' '
-                        lines.append(line)
-                        para += line
-                        line = ''
-                    # If the line is broken by either a hyphen or a line break, preserve the line break. This will improve readability for the user.
-                    if symbol.property.detected_break.type == breaks.HYPHEN:
-                        line += ' '
-                        lines.append(line + "-")
-                        para += line
-                        line = ''
-                    if symbol.property.detected_break.type == breaks.LINE_BREAK:
-                        lines.append(line)
-                        lines.append("")
-                        para += line
-                        line = ''
-            paragraphs.append(para)
+        return False
 
-for line in lines:
-    print(line)
+    def handwrittenOCR(self, image): # Transcribes content with some handwritten text
+        return {
+            lines: [],
+            raw: ""
+        }
+
+    def typedOCR(self, image): # Transcribes content with all typed text with format preserved
+        response = self.client.document_text_detection(image=image)
+
+        annotation = response.full_text_annotation
+        raw = annotation.text.replace('\n', ' ').replace("- ", "") #Replace new lines and hyphens
+        breaks = vision.enums.TextAnnotation.DetectedBreak.BreakType
+        lines = ""
+
+        # Preserve Line Breaks
+        for page in annotation.pages:
+            for block in page.blocks:
+                for paragraph in block.paragraphs:
+                    line = ""
+                    for word in paragraph.words:
+                        for symbol in word.symbols:
+                            line += symbol.text
+                            if symbol.property.detected_break.type == breaks.SPACE:
+                                line += ' '
+                            if symbol.property.detected_break.type == breaks.EOL_SURE_SPACE:
+                                line += ' '
+                                lines += line + "\n"
+                                line = ''
+                            # If the line is broken by either a hyphen or a line break, preserve the line break. This will improve readability for the user.
+                            if symbol.property.detected_break.type == breaks.HYPHEN:
+                                line += ' '
+                                lines += line + "-\n"
+                                line = ''
+                            if symbol.property.detected_break.type == breaks.LINE_BREAK:
+                                lines += line + "\n"
+                                lines += "\n"
+                                line = ''
+
+        return {
+            "lines": lines,
+            "raw": raw
+        }
+
+ocr = ImageOCR()
+ocr.annotate('../data/scans/StearnsCorrFolder1956_001A.jpg', '../output/transcribed/StearnsCorrFolder1956_001A.json')

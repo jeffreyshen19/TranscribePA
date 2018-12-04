@@ -5,7 +5,7 @@ Transcribing handwritten documents, using crowdsourcing and machine learning. Cr
 
 *   **[data/](data/)**: labeled training + testing data.
 *   **[docs/](docs/)**: details on how the models are implemented/work.
-*   **[notebooks/](notebooks/)**: contains all ipynb files used to implement the ML model.
+*   **[notebooks/](notebooks/)**: contains all ipynb and py files used to implement the ML model.
 
 ## Contributing
 
