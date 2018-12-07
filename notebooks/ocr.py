@@ -7,8 +7,7 @@ import io
 import os
 import json
 
-from google.cloud import vision
-from google.cloud.vision import types
+from google.cloud import vision_v1p3beta1 as vision
 
 ## Instantiates an image transcriber
 class ImageOCR:
@@ -22,7 +21,7 @@ class ImageOCR:
         with io.open(file_name, 'rb') as image_file: # Loads the image into memory
             content = image_file.read()
 
-        image = types.Image(content=content)
+        image = vision.types.Image(content=content)
 
         # Process the Images
         data = {}
@@ -52,18 +51,18 @@ class ImageOCR:
         return False
 
     def handwrittenOCR(self, image): # Transcribes content with some handwritten text
-        return {
-            lines: [],
-            raw: ""
-        }
+        image_context = vision.types.ImageContext(language_hints=['en-t-i0-handwrit'])
+        response = self.client.document_text_detection(image=image, image_context=image_context)
+        return self.formatText(response.full_text_annotation)
 
     def typedOCR(self, image): # Transcribes content with all typed text with format preserved
         response = self.client.document_text_detection(image=image)
+        return self.formatText(response.full_text_annotation)
 
-        annotation = response.full_text_annotation
+    def formatText(self, annotation): # Returns the transcription formatted with line breaks
+        lines = ""
         raw = annotation.text.replace('\n', ' ').replace("- ", "") #Replace new lines and hyphens
         breaks = vision.enums.TextAnnotation.DetectedBreak.BreakType
-        lines = ""
 
         # Preserve Line Breaks
         for page in annotation.pages:
