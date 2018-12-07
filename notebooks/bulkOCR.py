@@ -6,9 +6,17 @@
 
 from ocr import ImageOCR # Custom code to read files
 import csv
+import os
 
 def bulkTranscribe(inputPath, outputPath, metadataPath):
     ocr = ImageOCR()
+    for document in parseCSV(metadataPath):
+        try:
+            ocr.annotate(os.path.join(os.path.dirname(__file__), inputPath) + document["filename"] + ".jpg", os.path.join(os.path.dirname(__file__), outputPath) + document["filename"] + ".json", document["metadata"])
+        except:
+            print("ERROR TRANSCRIBING " + document["filename"])
+
+    print("DONE TRANSCRIBING")
 
 def parseCSV(metadataPath): #Returns an array of dicts representing each image to parse
     with open(metadataPath) as csv_file:
@@ -37,3 +45,4 @@ def parseCSV(metadataPath): #Returns an array of dicts representing each image t
                     })
 
         return data
+bulkTranscribe("../data/scans/", "../output/transcribed/", "../data/scans/metadata.csv")
