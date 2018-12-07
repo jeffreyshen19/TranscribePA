@@ -1,5 +1,4 @@
 .DS_Store
 service-keys.json
 data
-output
 __pycache__
