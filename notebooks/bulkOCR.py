@@ -45,4 +45,5 @@ def parseCSV(metadataPath): #Returns an array of dicts representing each image t
                     })
 
         return data
+        
 bulkTranscribe("../data/scans/", "../output/transcribed/", "../data/scans/metadata.csv")

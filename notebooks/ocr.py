@@ -28,9 +28,11 @@ class ImageOCR:
         if self.isHandwritten(image):
             print("Transcribing", path, " (HANDWRITTEN)")
             data = self.handwrittenOCR(image)
+            data["handwritten"] = True
         else:
             print("Transcribing", path, " (TYPED)")
             data = self.typedOCR(image)
+            data["handwritten"] = False
 
         # Include the metadata
         data["metadata"] = metadata
@@ -63,6 +65,7 @@ class ImageOCR:
         lines = ""
         raw = annotation.text.replace('\n', ' ').replace("- ", "") #Replace new lines and hyphens
         breaks = vision.enums.TextAnnotation.DetectedBreak.BreakType
+        languages = []
 
         # Preserve Line Breaks
         for page in annotation.pages:
@@ -71,6 +74,13 @@ class ImageOCR:
                     line = ""
                     for word in paragraph.words:
                         for symbol in word.symbols:
+
+                            # Grab the language of the block
+                            for language in symbol.property.detected_languages:
+                                if language.language_code not in languages:
+                                    languages.append(language.language_code)
+
+                            # Format breaks
                             line += symbol.text
                             if symbol.property.detected_break.type == breaks.SPACE:
                                 line += ' '
@@ -90,5 +100,6 @@ class ImageOCR:
 
         return {
             "lines": lines,
-            "raw": raw
+            "raw": raw,
+            "languages": languages
         }
