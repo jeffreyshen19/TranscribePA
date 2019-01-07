@@ -57,13 +57,13 @@ class ImageOCR:
     def handwrittenOCR(self, image): # Transcribes content with some handwritten text
         image_context = vision.types.ImageContext(language_hints=['en-t-i0-handwrit'])
         response = self.client.document_text_detection(image=image, image_context=image_context)
-        return self.formatText(response.full_text_annotation)
+        return self.formatText(response.full_text_annotation, True)
 
     def typedOCR(self, image): # Transcribes content with all typed text with format preserved
         response = self.client.document_text_detection(image=image)
-        return self.formatText(response.full_text_annotation)
+        return self.formatText(response.full_text_annotation, False)
 
-    def formatText(self, annotation): # Returns the transcription formatted with line breaks
+    def formatText(self, annotation, handwritten): # Returns the transcription formatted with line breaks
         lines = ""
         breaks = vision.enums.TextAnnotation.DetectedBreak.BreakType
         languages = []
@@ -99,7 +99,8 @@ class ImageOCR:
                                 lines += "\n"
                                 line = ''
 
-        lines = self.spellCheck.check(lines)
+        if "zh" not in languages && handwritten = False
+            lines = self.spellCheck.check(lines)
 
         return {
             "lines": lines,
