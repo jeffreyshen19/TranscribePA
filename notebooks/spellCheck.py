@@ -2,6 +2,7 @@
 # Corrects transcription using a probabilistic spell check,  #
 # including custom "context" words users can define based on #
 # their collection                                           #
+# Some code taken from http://norvig.com/spell-correct.html  #
 # Jeffrey Shen                                               #
 #------------------------------------------------------------#
 
@@ -10,50 +11,65 @@ import os
 import re
 from collections import Counter
 
-# *** ONLY RUN SPELL CHECKER ON ENGLISH TEXT ****
+class SpellCheck:
+    def __init__(self, corpus=[]):
+        self.WORDS = Counter(SpellCheck.words(open('../data/corpus.txt').read().lower())) # Get the occurences of a large corpus of English texts
+        self.N = sum(self.WORDS.values()) # total number of words
+        self.custom_corpus = corpus
 
-# input_file_name = os.path.join(os.path.dirname(__file__), "../output/transcribed/StearnsCorrFolder1956_001A.json")
+    def check(self, str):
+        tokens = re.split(r'([^\w]+)', str) # Get all tokens, split into an array
+        output = ""
+        for token in tokens:
+            if re.match(r"[a-z]{3,}", token): # If it's a lowercase word (solely alphabetic) with more than 3 characters, continue
+                output += self.correction(token)
+            else: # Otherwise, just append it to the output
+                output += token
 
-# with open(input_file_name, 'r') as input:
-#     dict = json.load(input)
-#     print(dict)
+        return output
 
-# SOURCE: http://norvig.com/spell-correct.html
+    def P(self, word):
+        "Probability of `word`."
+        if word in self.custom_corpus:
+            return 1
+        return self.WORDS[word] / self.N
 
-def words(text): # Gets all the words within a string
-    return re.findall(r'\w+', text)
+    def correction(self, word):
+        "Most probable spelling correction for word."
+        return max(self.candidates(word), key=self.P)
 
-WORDS = Counter(words(open('../data/corpus.txt').read().lower())) # Get the occurences of a large corpus of English text
+    def candidates(self, word):
+        "Generate possible spelling corrections for word."
+        return (self.known([word]) or self.known(self.edits1(word)) or self.known(self.edits2(word)) or [word])
 
-def P(word, N=sum(WORDS.values())):
-    "Probability of `word`."
-    return WORDS[word.lower()] / N
+    def known(self, words):
+        "The subset of `words` that appear in the dictionary of WORDS."
+        return set(w for w in words if (w in self.WORDS or w in self.custom_corpus))
 
-def correction(word):
-    "Most probable spelling correction for word."
-    return max(candidates(word.lower()), key=P)
+    def edits1(self, word):
+        "All edits that are one edit away from `word`."
+        letters    = 'abcdefghijklmnopqrstuvwxyz'
+        splits     = [(word[:i], word[i:])    for i in range(len(word) + 1)]
+        deletes    = [L + R[1:]               for L, R in splits if (R and len(L + R[1:]) >= 3)]
+        transposes = [L + R[1] + R[0] + R[2:] for L, R in splits if len(R)>1]
+        replaces   = [L + c + R[1:]           for L, R in splits if R for c in letters]
+        inserts    = [L + c + R               for L, R in splits for c in letters]
+        return set(deletes + transposes + replaces + inserts)
 
-def candidates(word):
-    "Generate possible spelling corrections for word."
-    return (known([word]) or known(edits1(word)) or known(edits2(word)) or [word])
+    def edits2(self, word):
+        "All edits that are two edits away from `word`."
+        return (e2 for e1 in self.edits1(word) for e2 in self.edits1(e1))
 
-def known(words):
-    "The subset of `words` that appear in the dictionary of WORDS."
-    return set(w for w in words if w in WORDS)
+    '''Helper Functions'''
 
-def edits1(word):
-    "All edits that are one edit away from `word`."
-    letters    = 'abcdefghijklmnopqrstuvwxyz'
-    splits     = [(word[:i], word[i:])    for i in range(len(word) + 1)]
-    deletes    = [L + R[1:]               for L, R in splits if R]
-    transposes = [L + R[1] + R[0] + R[2:] for L, R in splits if len(R)>1]
-    replaces   = [L + c + R[1:]           for L, R in splits if R for c in letters]
-    inserts    = [L + c + R               for L, R in splits for c in letters]
-    return set(deletes + transposes + replaces + inserts)
+    def valid_languages(languages):
+        '''Check if the document is in a language spellchecker works on'''
+        excluded_languages = ["zh"] # Languages NOT to run spell checker on TODO: make this configurable
 
-def edits2(word):
-    "All edits that are two edits away from `word`."
-    return (e2 for e1 in edits1(word) for e2 in edits1(e1))
+        for language in languages:
+            if language in excluded_languages: return False
+        return True
 
-print(words('/1916\n\nJarmary 18, 1927\n\nMr. Kwan, Sans Sing \n11 Rue du Marechal Yoch \nPiantsin, China\n\nMy dear Kuant'))
-# print(correction("/1916\n\nJarmary 18, 1927\n\nMr. Kwan, Sans Sing \n11 Rue du Marechal Yoch \nPiantsin, China\n\nMy dear Kuant"))
+    def words(text):
+        '''Gets all the words within a string'''
+        return re.findall(r'\w+', text)

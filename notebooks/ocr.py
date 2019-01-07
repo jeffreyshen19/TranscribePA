@@ -6,13 +6,15 @@
 import io
 import os
 import json
+from spellCheck import SpellCheck
 
 from google.cloud import vision_v1p3beta1 as vision
 
 ## Instantiates an image transcriber
 class ImageOCR:
-    def __init__(self):
+    def __init__(self, corpus=[]):
         self.client = vision.ImageAnnotatorClient()
+        self.spellCheck = SpellCheck(corpus=corpus)
 
     def annotate(self, path, outputPath, metadata):
         file_name = os.path.join(os.path.dirname(__file__), path)
@@ -63,7 +65,6 @@ class ImageOCR:
 
     def formatText(self, annotation): # Returns the transcription formatted with line breaks
         lines = ""
-        raw = annotation.text.replace('\n', ' ').replace("- ", "") #Replace new lines and hyphens
         breaks = vision.enums.TextAnnotation.DetectedBreak.BreakType
         languages = []
 
@@ -98,8 +99,10 @@ class ImageOCR:
                                 lines += "\n"
                                 line = ''
 
+        lines = self.spellCheck.check(lines)
+
         return {
             "lines": lines,
-            "raw": raw,
+            "raw": lines.replace('\n', ' ').replace(" - ", ""),
             "languages": languages
         }
