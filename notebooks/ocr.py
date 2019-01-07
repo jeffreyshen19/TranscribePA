@@ -99,7 +99,7 @@ class ImageOCR:
                                 lines += "\n"
                                 line = ''
 
-        if "zh" not in languages && handwritten = False
+        if "zh" not in languages and not handwritten:
             lines = self.spellCheck.check(lines)
 
         return {
