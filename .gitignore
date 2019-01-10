@@ -2,3 +2,5 @@
 service-keys.json
 data
 __pycache__
+node_modules
+bower_components

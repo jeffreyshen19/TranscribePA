@@ -1,0 +1,27 @@
+{
+  "name": "transcribe-pa",
+  "version": "1.0.0",
+  "description": "An extensible platform for rapidly transcribing historical documents using machine-learning and crowdsourcing. ",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeffreyshen19/Digital-Transcription.git"
+  },
+  "author": "Jeffrey Shen <jeffreyshencc@gmail.com> (http://jeffreyshen.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jeffreyshen19/Digital-Transcription/issues"
+  },
+  "homepage": "https://github.com/jeffreyshen19/Digital-Transcription#readme",
+  "devDependencies": {
+    "gulp": "^4.0.0",
+    "gulp-minify": "^3.1.0",
+    "gulp-sass": "^4.0.2"
+  }
+}

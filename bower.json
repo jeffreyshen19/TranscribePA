@@ -1,0 +1,17 @@
+{
+  "name": "transcribe-pa",
+  "description": "An extensible platform for rapidly transcribing historical documents using machine-learning and crowdsourcing.",
+  "main": "index.js",
+  "authors": [
+    "Jeffrey Shen <jeffreyshencc@gmail.com> (http://jeffreyshen.com)"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/jeffreyshen19/Digital-Transcription",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
