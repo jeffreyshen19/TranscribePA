@@ -7,9 +7,9 @@ router.use('/admin', require('./admin'));
 router.use('/verify', require('./verify'));
 router.use('/browse', require('./browse'));
 
-//
+//Root routes
 router.get('/', function(req, res) {
-
+  res.render("index");
 });
 
 module.exports = router;
