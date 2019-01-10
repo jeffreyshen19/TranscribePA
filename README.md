@@ -3,10 +3,11 @@ An extensible platform for rapidly transcribing historical documents using machi
 
 ## Features
 
-✅ Designed to handle *full-text* transcription
-✅ Stylish by default 
-✅ Easy to set-up
-✅ Customizable and fully open-source
+✅ Designed to handle *full-text* transcription  
+✅ Faster transcriptions using machine-learning
+✅ Stylish by default  
+✅ Easy to set-up  
+✅ Customizable and fully open-source  
 
 ## Contributing
 
