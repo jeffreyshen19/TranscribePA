@@ -1,11 +1,12 @@
-# Digital Transcription
-Transcribing handwritten documents, using crowdsourcing and machine learning. Created for CSC600 at Phillips Academy.
+# TranscribePA
+An extensible platform for rapidly transcribing historical documents using machine-learning and crowdsourcing.
 
-## Table of Contents
+## Features
 
-*   **[data/](data/)**: labeled training + testing data.
-*   **[docs/](docs/)**: details on how the models are implemented/work.
-*   **[notebooks/](notebooks/)**: contains all ipynb and py files used to implement the ML model.
+✅ Designed to handle *full-text* transcription
+✅ Stylish by default 
+✅ Easy to set-up
+✅ Customizable and fully open-source
 
 ## Contributing
 
@@ -14,7 +15,3 @@ Please read [CONTRIBUTING.md](CONTRIBUTING.md) and the [Code of Conduct](CODE_OF
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details
-
-## Data
-
-This project uses a collection of handwritten letters from the late-1800s, sourced from the Oliver Wendell Holmes Library at Phillips Academy.
