@@ -5,6 +5,11 @@ html
     include includes/head.pug
   body
     include includes/nav.pug
+    
+    ul 
+      each document in documents:
+        li= document 
+    
     include includes/footer.pug
     
     script(src = "/bower_components/jquery/dist/jquery.min.js")
