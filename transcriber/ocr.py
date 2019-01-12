@@ -11,7 +11,7 @@ from spellCheck import SpellCheck
 
 from google.cloud import vision_v1p3beta1 as vision
 
-if len(sys.argv) < 4:
+if len(sys.argv) < 3:
     sys.exit()
 
 ## Instantiates an image transcriber
@@ -20,9 +20,8 @@ class ImageOCR:
         self.client = vision.ImageAnnotatorClient()
         self.spellCheck = SpellCheck(corpus=corpus)
 
-    def annotate(self, path, outputPath, metadata):
-        file_name = os.path.join(os.path.dirname(__file__), path)
-        output_file_name = os.path.join(os.path.dirname(__file__), outputPath)
+    def annotate(self, path, metadata):
+        file_name = path
 
         with io.open(file_name, 'rb') as image_file: # Loads the image into memory
             content = image_file.read()
@@ -41,7 +40,7 @@ class ImageOCR:
         # Include the metadata
         data["metadata"] = metadata
 
-        print(data)
+        print(json.dumps(data))
 
     def isHandwritten(self, image): #Returns whether the API says the image has handwriting in it
         response = self.client.label_detection(image=image)
@@ -109,8 +108,7 @@ class ImageOCR:
         }
 
 path = sys.argv[1]
-outputPath = sys.argv[2]
-metadata = json.loads(sys.argv[3])
+metadata = json.loads(sys.argv[2])
 
 ocr = ImageOCR()
-ocr.annotate(path, outputPath, metadata)
+ocr.annotate(path, metadata)

@@ -4,13 +4,14 @@ var Document = require("../models/Document"),
   Collection = require("../models/Collection");
 var auth = require("../middleware/auth.js");
 var fs = require("fs");
+var ocr = require("../helpers/ocr.js");
 
 // Admin Dashboard
 router.get("/", function(req, res){
   res.render("admin");
 });
 
-// Create Collection
+// Create Collection and add its documents
 router.post("/new-collection", function(req, res){
   // var name = req.body.name,
   //   description = req.body.description,
@@ -26,6 +27,39 @@ router.post("/new-collection", function(req, res){
     res.send("done!");
   });
 });
+
+// Add a document to an existing collection
+router.post("/new-document", function(req, res){
+  ocr(req.file.path, {}, function(data){
+
+    if(data === "ERROR") res.send(data);
+
+    console.log(data);
+
+    var document = new Document({
+      lines: data.lines,
+      raw: data.raw,
+      handwritten: data.handwritten,
+      languages: data.languages,
+      metadata: {},
+      transcribed: false,
+      verified: false,
+      completed: false,
+      changelog: [],
+      // collection_id: ,
+      img: req.file.path
+    });
+
+    document.save(function (err) {
+      if (err) console.log(err);
+      res.send("done!");
+    });
+  });
+});
+
+// Delete document
+
+// Delete collection and all its documents
 
 // var doc = new Document({
 //   lines: 'Anim tempor labore laborum aliquip culpa ut ut enim nostrud ipsum ex laboris quis reprehenderit. Incididunt dolor enim labore id labore veniam consequat eiusmod cupidatat tempor ut commodo ea enim. Ex fugiat fugiat sit voluptate voluptate sit qui sunt aute eu reprehenderit. Velit culpa mollit quis exercitation ea ut tempor duis Lorem.'

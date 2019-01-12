@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var multer = require('multer');
 var crypto = require('crypto');
 var mime = require('mime');
+require('dotenv').config();
 
 // Configure App
 app.use(express.static("./public"));
