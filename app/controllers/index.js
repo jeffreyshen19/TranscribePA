@@ -3,7 +3,7 @@ var express = require('express'),
 
 //Import routes
 // router.use('/transcribe', require('./transcribe'));
-// router.use('/admin', require('./admin'));
+router.use('/admin', require('./admin'));
 // router.use('/verify', require('./verify'));
 router.use('/browse', require('./browse'));
 

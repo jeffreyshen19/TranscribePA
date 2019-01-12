@@ -12,6 +12,7 @@ var DocumentSchema = new mongoose.Schema({
   completed: Boolean, // Has a librarian accepted this document into the database
   changelog: [{}], // Keep track of who's edited this document
   collection_id: mongoose.Schema.ObjectId, //What collection is this document part of?
+  img: String // Path to image upload
 });
 
 module.exports = mongoose.model("Document", DocumentSchema);
