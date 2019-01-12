@@ -5,10 +5,14 @@
 
 import io
 import os
+import sys
 import json
 from spellCheck import SpellCheck
 
 from google.cloud import vision_v1p3beta1 as vision
+
+if len(sys.argv) < 4:
+    sys.exit()
 
 ## Instantiates an image transcriber
 class ImageOCR:
@@ -28,20 +32,16 @@ class ImageOCR:
         # Process the Images
         data = {}
         if self.isHandwritten(image):
-            print("Transcribing", path, " (HANDWRITTEN)")
             data = self.handwrittenOCR(image)
             data["handwritten"] = True
         else:
-            print("Transcribing", path, " (TYPED)")
             data = self.typedOCR(image)
             data["handwritten"] = False
 
         # Include the metadata
         data["metadata"] = metadata
 
-        # Write to JSON
-        with open(output_file_name, 'w+') as outfile:
-            json.dump(data, outfile)
+        print(data)
 
     def isHandwritten(self, image): #Returns whether the API says the image has handwriting in it
         response = self.client.label_detection(image=image)
@@ -107,3 +107,10 @@ class ImageOCR:
             "raw": lines.replace('\n', ' ').replace(" - ", ""),
             "languages": languages
         }
+
+path = sys.argv[1]
+outputPath = sys.argv[2]
+metadata = json.loads(sys.argv[3])
+
+ocr = ImageOCR()
+ocr.annotate(path, outputPath, metadata)

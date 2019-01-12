@@ -13,7 +13,7 @@ from collections import Counter
 
 class SpellCheck:
     def __init__(self, corpus=[]):
-        self.WORDS = Counter(SpellCheck.words(open('../data/corpus.txt').read().lower())) # Get the occurences of a large corpus of English texts
+        self.WORDS = Counter(SpellCheck.words(open('./data/corpus.txt').read().lower())) # Get the occurences of a large corpus of English texts
         self.N = sum(self.WORDS.values()) # total number of words
         self.custom_corpus = corpus
 
