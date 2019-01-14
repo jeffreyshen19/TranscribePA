@@ -1,9 +1,12 @@
 var express = require('express'),
   router = express.Router();
+var fs = require("fs");
+var path = require("path");
+
 var Document = require("../models/Document"),
   Collection = require("../models/Collection");
-var auth = require("../middleware/auth.js");
-var fs = require("fs");
+var auth = require("../middleware/auth");
+var multer = require("../middleware/multer");
 var ocr = require("../helpers/ocr.js");
 
 // Admin Dashboard
@@ -29,7 +32,7 @@ router.post("/new-collection", function(req, res){
 });
 
 // Add a document to an existing collection
-router.post("/new-document", function(req, res){
+router.post("/new-document", multer.single("image"), function(req, res){
   ocr(req.file.path, {}, function(data){
 
     if(data === "ERROR") res.send(data);
@@ -46,8 +49,7 @@ router.post("/new-document", function(req, res){
       verified: false,
       completed: false,
       changelog: [],
-      // collection_id: ,
-      img: req.file.path
+      img: path.relative(appRoot, req.file.path)
     });
 
     document.save(function (err) {
