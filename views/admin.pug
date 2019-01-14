@@ -9,6 +9,10 @@ html
     form(action = "/admin/new-document" method = "post" enctype = "multipart/form-data")
       input(type = "file" name = "image")
       input(type = "submit" value = "SUBMIT")
+        
+    form(action = "/admin/new-collection" method = "post" enctype = "multipart/form-data")
+      input(type = "file" name = "zip")
+      input(type = "submit" value = "SUBMIT")
     
     include includes/footer.pug
     

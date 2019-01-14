@@ -8,6 +8,8 @@ var Document = require("../models/Document"),
 var auth = require("../middleware/auth");
 var multer = require("../middleware/multer");
 var ocr = require("../helpers/ocr.js");
+var unzipper = require("unzipper");
+var fs = require("fs");
 
 // Admin Dashboard
 router.get("/", function(req, res){
@@ -15,20 +17,31 @@ router.get("/", function(req, res){
 });
 
 // Create Collection and add its documents
-router.post("/new-collection", function(req, res){
+router.post("/new-collection", multer.single("zip"), function(req, res){
   // var name = req.body.name,
   //   description = req.body.description,
   //   slug = req.body.slug;
 
-  var collection = new Collection({
-    name: "Test Collection",
-    img: req.file.path
-  });
+  var slug = "test";
 
-  collection.save(function (err) {
-    if (err) console.log(err);
-    res.send("done!");
-  });
+  fs.createReadStream(req.file.path)
+    .pipe(unzipper.Extract({ path: appRoot + "/uploads/" + slug }));
+
+  fs.unlink(req.file.path, function(err){
+    if(err) console.log("err");
+  }); //Delete the ZIP
+
+  res.send("done!");
+
+  // var collection = new Collection({
+  //   name: "Test Collection",
+  //   img: req.file.path
+  // });
+  //
+  // collection.save(function (err) {
+  //   if (err) console.log(err);
+  //   res.send("done!");
+  // });
 });
 
 // Add a document to an existing collection
