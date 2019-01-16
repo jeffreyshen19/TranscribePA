@@ -2,14 +2,14 @@ var express = require('express'),
   router = express.Router();
 var fs = require("fs");
 var path = require("path");
+var unzipper = require("unzipper");
+var slugify = require("slugify");
 
 var Document = require("../models/Document"),
   Collection = require("../models/Collection");
 var auth = require("../middleware/auth");
 var multer = require("../middleware/multer");
 var ocr = require("../helpers/ocr.js");
-var unzipper = require("unzipper");
-var fs = require("fs");
 
 // Admin Dashboard
 router.get("/", function(req, res){
@@ -17,31 +17,76 @@ router.get("/", function(req, res){
 });
 
 // Create Collection and add its documents
-router.post("/new-collection", multer.single("zip"), function(req, res){
-  // var name = req.body.name,
-  //   description = req.body.description,
-  //   slug = req.body.slug;
+router.post("/new-collection", multer.fields([{name: 'zip', maxCount: 1}, {name: 'img', maxCount: 1}]), function(req, res){
+  var name = req.body.name,
+    description = req.body.description,
+    slug = slugify(req.body.name.toLowerCase());
 
-  var slug = "test";
+  var collection = new Collection({
+    name: name,
+    description: description,
+    slug: slug,
+    img: path.relative(appRoot, req.files.img[0].path)
+  });
 
-  fs.createReadStream(req.file.path)
-    .pipe(unzipper.Extract({ path: appRoot + "/uploads/" + slug }));
+  collection.save(function (err) {
+    if (err) console.log(err);
+    res.send("Collection created! Uploading documents rn");
 
-  fs.unlink(req.file.path, function(err){
-    if(err) console.log("err");
-  }); //Delete the ZIP
+    fs.mkdirSync(appRoot + "/uploads/" + slug);
 
-  res.send("done!");
+    var files = [];
 
-  // var collection = new Collection({
-  //   name: "Test Collection",
-  //   img: req.file.path
-  // });
-  //
-  // collection.save(function (err) {
-  //   if (err) console.log(err);
-  //   res.send("done!");
-  // });
+    // Unzip the file
+    fs.createReadStream(req.files.zip[0].path)
+      .pipe(unzipper.Parse())
+      .on('entry', function (entry) {
+        if(!entry.path.includes("__MACOSX") && (entry.path.includes(".jpeg") || entry.path.includes(".jpg") || entry.path.includes(".png"))) {
+          files.push(entry.path.replace(/^[^\/]+\//gi, ""));
+          entry.pipe(fs.createWriteStream(appRoot + "/uploads/" + slug + "/" + entry.path.replace(/^[^\/]+\//gi, "")));
+        }
+        else entry.autodrain();
+
+      })
+      .on('close', function () {
+        // Delete the ZIP
+        fs.unlink(req.files.zip[0].path, function(err){
+          if(err) console.log("err");
+        });
+
+        function bulkOCR(files, i){
+          console.log(files[i]);
+          if(i < files.length){
+            ocr(appRoot + "/uploads/" + slug + "/" + files[i], {}, function(data){
+
+              var document = new Document({
+                lines: data.lines,
+                raw: data.raw,
+                handwritten: data.handwritten,
+                languages: data.languages,
+                metadata: {},
+                transcribed: false,
+                verified: false,
+                completed: false,
+                changelog: [],
+                img: path.relative(appRoot, slug + "/" + files[i]),
+                collection_id: collection._id
+              });
+
+              document.save(function (err) {
+                if (err) console.log(err);
+                bulkOCR(files, i + 1);
+              });
+            });
+          }
+        }
+
+        // Save all files into the database
+        bulkOCR(files, 0);
+
+      });
+
+  });
 });
 
 // Add a document to an existing collection
