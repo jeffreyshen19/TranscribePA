@@ -12,6 +12,13 @@ router.get('/', function(req, res) {
   });
 });
 
+// See all documents
+router.get('/all', function(req, res) {
+  Document.find({}, function(err, documents){
+    res.render("browse", {documents: documents});
+  });
+});
+
 // View by collection
 router.get('/collections', function(req, res){
   Collection.find({}, function(err, collections){

@@ -3,13 +3,67 @@ html
   head
     - var title = "TranscribePA" //TODO: make this configurable
     include includes/head.pug
+    
+    link(href = "/dist/CSS/browse.css" rel = "stylesheet" type = "text/css")
   body
     include includes/nav.pug
     
-    ul 
-      each document in documents
-        li= document 
-    
+    header 
+      h1 Browse 
+      p Explore transcribed documents in our archives!
+      
+      form(method = "GET" action = "/browse/search")
+        .field.has-addons
+          .control 
+            input.input(type = "text" name = "query" placeholder = "Search full-text transcriptions")
+          .control  
+            input.button.is-info(type = "submit" value = "SEARCH")
+              
+      p Or, <a href = "/browse/collections">browse by collection</a> or <a href = "/browse/all">explore unfinished documents</a>.
+      
+    #body
+      .field.is-horizontal 
+        .field-label.is-normal
+          label.label Filter by language: 
+        .field-body
+          .field.is-narrow
+            p.control.has-icons-left
+              span.select
+                select 
+                  option(selected) All languages 
+                  option Mandarin (zh)
+                  option English (en)
+                span.icon.is-small.is-left
+                  i.fas.fa-globe
+      .field.is-horizontal 
+        .field-label.is-normal
+          label.label Filter by type: 
+        .field-body
+          .field.is-narrow
+            p.control.has-icons-left
+              span.select
+                select 
+                  option(selected) Any type 
+                  option Handwritten
+                  option Typed
+                span.icon.is-small.is-left
+                  i.fas.fa-scroll
+
+      #browse
+        each document in documents 
+          .item
+            img(src = "/uploads/" + document.img)
+            p= document.collection_id
+          
+      
     include includes/footer.pug
     
     script(src = "/bower_components/jquery/dist/jquery.min.js")
+    script(src = "/bower_components/masonry-layout/dist/masonry.pkgd.min.js")
+    script.
+      $(window).on("load", function(){
+        $('#browse').masonry({
+          itemSelector: '.item',
+          columnWidth: 250
+        });
+      });

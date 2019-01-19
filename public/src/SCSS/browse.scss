@@ -1,0 +1,18 @@
+@import "reset";
+@import "theme";
+
+#browse{
+  // display: grid;
+  // grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  // grid-gap: 10px;
+  // grid-auto-rows: minmax(180px, auto);
+  // grid-auto-flow: dense;
+  // padding: 10px;
+
+  .item{
+    img{
+      width: 250px;
+    }
+
+  }
+}
