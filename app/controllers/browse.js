@@ -1,21 +1,43 @@
+/*jshint esversion: 6 */
+
 var express = require('express'),
   router = express.Router();
 var Document = require("../models/Document");
 var Collection = require("../models/Collection");
+var paginate = require('express-paginate');
 
 // See all completed documents
-router.get('/', function(req, res) {
-  Document.find({
-    "completed": true
-  }, function(err, documents){
-    res.render("browse", {documents: documents});
+router.get('/', paginate.middleware(50, 100), async (req, res) => {
+  const [ results, itemCount ] = await Promise.all([
+      Document.find({completed: true}).limit(req.query.limit).skip(req.skip).lean().exec(),
+      Document.count({completed: true})
+    ]);
+
+  const pageCount = Math.ceil(itemCount / req.query.limit);
+
+  res.render("browse", {
+    documents: results,
+    pageCount,
+    itemCount,
+    pages: paginate.getArrayPages(req)(3, pageCount, req.query.page)
   });
 });
 
 // See all documents
-router.get('/all', function(req, res) {
-  Document.find({}, function(err, documents){
-    res.render("browse", {documents: documents});
+router.get('/all', paginate.middleware(50, 100), async (req, res) => {
+  const [ results, itemCount ] = await Promise.all([
+      Document.find({}).limit(req.query.limit).skip(req.skip).lean().exec(),
+      Document.count({})
+    ]);
+
+  const pageCount = Math.ceil(itemCount / req.query.limit);
+
+  res.render("browse", {
+    documents: results,
+    pageCount,
+    itemCount,
+    currentPage: req.query.page,
+    pages: paginate.getArrayPages(req)(3, pageCount, req.query.page)
   });
 });
 

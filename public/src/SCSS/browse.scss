@@ -6,7 +6,7 @@
 #body{
   width: 95vw;
   margin: 0 auto;
-  padding-top: 40px;
+  padding: 40px 0;
 }
 //
 header{
@@ -44,4 +44,10 @@ nav{
   .level{
     width: 95vw;
   }
+}
+
+.current{
+  color: $light-blue;
+  font-weight: bold;
+  border-color: $light-blue;
 }

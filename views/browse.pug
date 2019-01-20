@@ -50,8 +50,22 @@ html
           .item
             img(src = "/uploads/" + document.img)
             p= document.collection_id
-          
-      
+            
+      if paginate.hasPreviousPages || paginate.hasNextPages(pageCount)
+        .pagination(role = "navigation" aria-label = "pagination")  
+          if paginate.hasPreviousPages
+            a(class="pagination-previous" href=paginate.href(true)) Previous 
+          if paginate.hasNextPages(pageCount)
+            a(class="pagination-next" href=paginate.href()) Next 
+          if pages
+            ul.pagination-list 
+              each page in pages
+                li 
+                  if page.number == currentPage
+                    a.pagination-link.current(href = page.url)= page.number
+                  else
+                    a.pagination-link(href = page.url)= page.number
+        
     include includes/footer.pug
     
     script(src = "/bower_components/jquery/dist/jquery.min.js")
