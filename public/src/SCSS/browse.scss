@@ -4,8 +4,30 @@
 @import "header";
 
 #body{
-  width: 90vw;
+  width: 95vw;
   margin: 0 auto;
+  padding-top: 40px;
+}
+//
+header{
+  background-color: $black;
+  color: white;
+  a{
+    color: white;
+    font-weight: bold;
+    &:hover{
+      color: $white;
+    }
+  }
+}
+
+nav{
+  a{
+    color: white;
+    &:hover{
+      color: $white;
+    }
+  }
 }
 
 #browse{
@@ -20,6 +42,6 @@
   }
 
   .level{
-    width: 90vw;
+    width: 95vw;
   }
 }

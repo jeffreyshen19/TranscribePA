@@ -24,7 +24,8 @@
 // Colors
 $black: #24252a;
 $blue: #3a539b;
-$dark-blue: #1f3a93;
+$light-blue: #446cb3;
+$white: #e4f1fe;
 
 // Text Styling
 h1, h2, h3, h4, h5, h6{
@@ -32,7 +33,7 @@ h1, h2, h3, h4, h5, h6{
 }
 
 h1{
-  font-size: 3rem;
+  font-size: 2.75rem;
   margin-bottom: 5px;
 }
 
@@ -46,11 +47,16 @@ strong{
 
 .button.is-info{
   background-color: $blue;
+  transition: 0.2s all;
+
+  &:hover{
+    background-color: $light-blue;
+  }
 }
 
 a{
   color: $blue;
   &:hover{
-    color: $dark-blue;
+    color: $light-blue;
   }
 }
