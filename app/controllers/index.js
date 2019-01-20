@@ -6,6 +6,7 @@ var express = require('express'),
 router.use('/admin', require('./admin'));
 // router.use('/verify', require('./verify'));
 router.use('/browse', require('./browse'));
+router.use('/document', require('./document'));
 
 //Root routes
 router.get('/', function(req, res) {

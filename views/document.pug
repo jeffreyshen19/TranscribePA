@@ -1,0 +1,16 @@
+doctype html
+html
+  head
+    - var title = "TranscribePA" 
+    include includes/head.pug
+    
+    link(href = "/dist/CSS/document.css" rel = "stylesheet" type = "text/css")
+  body
+    include includes/nav.pug
+      
+    #body
+      p=document
+        
+    include includes/footer.pug
+    
+    script(src = "/bower_components/jquery/dist/jquery.min.js")

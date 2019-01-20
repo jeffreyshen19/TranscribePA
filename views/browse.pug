@@ -48,8 +48,9 @@ html
                     i.fas.fa-scroll
         each document in documents 
           .item
-            img(src = "/uploads/" + document.img)
-            p= document.collection_id
+            a(href = "/document/" + document._id)
+              img(src = "/uploads/" + document.img)
+              p= document.collection_id
             
       if paginate.hasPreviousPages || paginate.hasNextPages(pageCount)
         .pagination(role = "navigation" aria-label = "pagination")  
