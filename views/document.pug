@@ -7,10 +7,27 @@ html
     link(href = "/dist/CSS/document.css" rel = "stylesheet" type = "text/css")
   body
     include includes/nav.pug
-      
+    hr
     #body
-      p=document
-        
+      h1 Title 
+      h2.is-heading Collection Name 
+      p= document.completed
+      br
+      .columns
+        .column
+          img(src = "/uploads/" + document.img)
+        .column
+          p.text!= document.lines.replace(/\n/g, "<br>")    
+      hr
+      br
+      h2 Metadata 
+      ul 
+        li <strong>Handwritten</strong>: #{document.handwritten}
+        li <strong>Languages</strong>: #{document.languages}
+      br 
+      h2 Changelog 
+      p= document.changelog
+
     include includes/footer.pug
     
     script(src = "/bower_components/jquery/dist/jquery.min.js")

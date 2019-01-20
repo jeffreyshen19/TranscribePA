@@ -4,9 +4,7 @@
 @import "header";
 
 #body{
-  width: 95vw;
-  margin: 0 auto;
-  padding: 40px 0;
+  padding: 40px 20px;
 }
 
 header{
@@ -25,7 +23,7 @@ nav{
   position: absolute;
   top: 0;
   left: 0;
-  
+
   a{
     color: white;
     &:hover{

@@ -1,3 +1,26 @@
 @import "reset";
 @import "theme";
 @import "nav";
+
+// nav{
+//   background-color: $black;
+//
+//   a{
+//     color: white;
+//     &:hover{
+//       color: $white;
+//     }
+//   }
+// }
+
+hr{
+  margin: 0;
+}
+
+#body{
+  padding: 15px 40px;
+
+  .text{
+    white-space: nowrap;
+  }
+}
