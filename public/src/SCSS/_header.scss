@@ -1,0 +1,21 @@
+header{
+  height: 50vh;
+
+  .text{
+    margin: 0 auto;
+    text-align: center;
+    top: 50%;
+    transform: translateY(-50%);
+    position: relative;
+    form{
+      margin: 0 auto;
+      width: 400px;
+      .input{
+        width: 300px;
+      }
+      .button{
+        width: 100px;
+      }
+    }
+  }
+}

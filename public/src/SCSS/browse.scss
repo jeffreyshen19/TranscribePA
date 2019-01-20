@@ -1,18 +1,25 @@
 @import "reset";
 @import "theme";
+@import "nav";
+@import "header";
+
+#body{
+  width: 90vw;
+  margin: 0 auto;
+}
 
 #browse{
-  // display: grid;
-  // grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-  // grid-gap: 10px;
-  // grid-auto-rows: minmax(180px, auto);
-  // grid-auto-flow: dense;
-  // padding: 10px;
+  margin: 0 auto;
 
   .item{
+    margin-bottom: 20px;
+
     img{
       width: 250px;
     }
+  }
 
+  .level{
+    width: 90vw;
   }
 }

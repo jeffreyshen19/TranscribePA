@@ -1,0 +1,56 @@
+// Fonts
+@font-face {
+  font-family: "Open Sans";
+  src: url("/assets/fonts/Open_Sans/OpenSans-Regular.ttf");
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("/assets/fonts/Open_Sans/OpenSans-Bold.ttf");
+  font-weight: bold;
+}
+
+@font-face {
+  font-family: "Open Sans";
+  src: url("/assets/fonts/Open_Sans/OpenSans-Italic.ttf");
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Montserrat";
+  src: url("/assets/fonts/montserrat/Montserrat-Bold.ttf");
+}
+
+// Colors
+$black: #24252a;
+$blue: #3a539b;
+$dark-blue: #1f3a93;
+
+// Text Styling
+h1, h2, h3, h4, h5, h6{
+  font-family: "Montserrat";
+}
+
+h1{
+  font-size: 3rem;
+  margin-bottom: 5px;
+}
+
+p, li, span, label{
+  font-family: "Open Sans";
+}
+
+strong{
+  font-weight: bold;
+}
+
+.button.is-info{
+  background-color: $blue;
+}
+
+a{
+  color: $blue;
+  &:hover{
+    color: $dark-blue;
+  }
+}

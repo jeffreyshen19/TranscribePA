@@ -1,0 +1,21 @@
+nav{
+  padding: 15px 20px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  z-index: 100;
+
+  a{
+    color: $black;
+    &:hover{
+      color: $blue;
+    }
+  }
+
+  .level-left{
+    font-weight: bold;
+    font-size: 1.2rem;
+  }
+
+}

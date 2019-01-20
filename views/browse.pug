@@ -8,48 +8,45 @@ html
   body
     include includes/nav.pug
     
-    header 
-      h1 Browse 
-      p Explore transcribed documents in our archives!
-      
-      form(method = "GET" action = "/browse/search")
-        .field.has-addons
-          .control 
-            input.input(type = "text" name = "query" placeholder = "Search full-text transcriptions")
-          .control  
-            input.button.is-info(type = "submit" value = "SEARCH")
-              
-      p Or, <a href = "/browse/collections">browse by collection</a> or <a href = "/browse/all">explore unfinished documents</a>.
+    header
+      .text.is-centered.is-vcentered
+        h1 Browse 
+        p.is-size-4 Explore transcribed documents in our archives!
+        br
+        form(method = "GET" action = "/browse/search")
+          .field.has-addons
+            .control 
+              input.input(type = "text" name = "query" placeholder = "Search full-text transcriptions")
+            .control  
+              input.button.is-info(type = "submit" value = "SEARCH")
+        br        
+        p Or, <a href = "/browse/collections">browse by collection</a> or <a href = "/browse/all">explore unfinished documents</a>.
       
     #body
-      .field.is-horizontal 
-        .field-label.is-normal
-          label.label Filter by language: 
-        .field-body
-          .field.is-narrow
-            p.control.has-icons-left
-              span.select
-                select 
-                  option(selected) All languages 
-                  option Mandarin (zh)
-                  option English (en)
-                span.icon.is-small.is-left
-                  i.fas.fa-globe
-      .field.is-horizontal 
-        .field-label.is-normal
-          label.label Filter by type: 
-        .field-body
-          .field.is-narrow
-            p.control.has-icons-left
-              span.select
-                select 
-                  option(selected) Any type 
-                  option Handwritten
-                  option Typed
-                span.icon.is-small.is-left
-                  i.fas.fa-scroll
-
-      #browse
+      #browse(style = "visibility:hidden")
+        .level.item
+          .level-left
+            .level-item.field-label
+              label.label Filter: 
+            .level-item.field-body
+              .field.is-narrow
+                p.control.has-icons-left
+                  span.select
+                    select 
+                      option(selected) All languages 
+                      option Mandarin (zh)
+                      option English (en)
+                    span.icon.is-small.is-left
+                      i.fas.fa-globe
+            .level-item.field.is-narrow
+              p.control.has-icons-left
+                span.select
+                  select 
+                    option(selected) Any type 
+                    option Handwritten
+                    option Typed
+                  span.icon.is-small.is-left
+                    i.fas.fa-scroll
         each document in documents 
           .item
             img(src = "/uploads/" + document.img)
@@ -64,6 +61,11 @@ html
       $(window).on("load", function(){
         $('#browse').masonry({
           itemSelector: '.item',
-          columnWidth: 250
+          columnWidth: 250,
+          gutter: 20,
+          horizontalOrder: true,
+          fitWidth: true,
+          transitionDuration: '0.2s'
         });
+        $("#browse").css("visibility", "visible")
       });
