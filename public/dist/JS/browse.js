@@ -11,7 +11,7 @@ $(window).on("load", function(){
   $("#browse").css("visibility", "visible");
 });
 
-//Update document so dropdowns display properly
+//Update document so dropdowns and search bar display properly
 function getUrlParameter(sParam) { //SOURCE: https://stackoverflow.com/questions/19491336/get-url-parameter-jquery-or-how-to-get-query-string-values-in-js
   var sPageURL = window.location.search.substring(1),
       sURLVariables = sPageURL.split('&'),
@@ -30,6 +30,7 @@ function getUrlParameter(sParam) { //SOURCE: https://stackoverflow.com/questions
 if(getUrlParameter("handwritten")) $("select#handwritten").val(getUrlParameter("handwritten"));
 if(getUrlParameter("completed")) $("select#completed").val(getUrlParameter("completed"));
 if(getUrlParameter("languages")) $("select#languages").val(getUrlParameter("languages"));
+if(getUrlParameter("query")) $("#search").val(getUrlParameter("query")) ;
 
 //Select control
 function updateURLParameter(url, param, paramVal){ //SOURCE: https://stackoverflow.com/questions/1090948/change-url-parameters
@@ -62,4 +63,9 @@ $("select#completed").change(function(){
 
 $("select#languages").change(function(){
   updateURLParameter(window.location.href, "languages", $(this).children("option:selected").val());
+});
+
+$("#search-form").submit(function(e){
+  updateURLParameter(window.location.href, "query", encodeURIComponent($("#search").val()));
+  e.preventDefault();
 });

@@ -15,4 +15,6 @@ var DocumentSchema = new mongoose.Schema({
   img: String // Path to image upload
 });
 
+DocumentSchema.index({"raw": "text"});
+
 module.exports = mongoose.model("Document", DocumentSchema);

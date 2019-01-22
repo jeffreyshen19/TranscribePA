@@ -8,8 +8,6 @@ var paginate = require('express-paginate');
 
 // See all completed documents
 router.get('/', paginate.middleware(50, 100), async (req, res) => {
-  console.log(req.query);
-
   var filter = {  };
 
   if(req.query.completed == null || req.query.completed == "true") filter.completed = true;
@@ -19,6 +17,8 @@ router.get('/', paginate.middleware(50, 100), async (req, res) => {
   else if(req.query.handwritten == "false") filter.handwritten = false;
 
   if(req.query.languages && req.query.languages != "all") filter.languages = {"$all": [req.query.languages]};
+
+  if(req.query.query) filter["$text"] = {"$search": req.query.query};
 
   const [ results, itemCount ] = await Promise.all([
       Document.find(filter).limit(req.query.limit).skip(req.skip).lean().exec(),
