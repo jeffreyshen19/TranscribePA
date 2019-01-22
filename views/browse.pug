@@ -46,12 +46,18 @@ html
                     option(value = "all") All Documents 
                     option(selected value = "true") Verified Documents
                     option(value = "false") Unverified Documents
+        if documents.length == 0
+          .level.item
+            p 
+              i.far.fa-frown 
+              | &nbsp;&nbsp;No results found for your search. 
+    
         each document in documents 
           .item
             a(href = "/document/" + document._id)
               img(src = "/uploads/" + document.img)
               p= document.collection_id
-            
+
       if paginate.hasPreviousPages || paginate.hasNextPages(pageCount)
         .pagination(role = "navigation" aria-label = "pagination")  
           if paginate.hasPreviousPages
