@@ -1,0 +1,39 @@
+@import "reset";
+@import "theme";
+@import "nav";
+
+#body{
+  height: calc(100vh - 49px);
+  padding-top: 20px;
+  padding-bottom: 56px;
+  display: flex;
+  flex-flow: column;
+
+  #editor{
+    flex: 2;
+
+    img{
+      max-height: 100%;
+    }
+
+    #text-editor{
+      display: flex;
+      flex-flow: column;
+
+      #text{
+        flex: 2;
+        overflow-y: scroll;
+      }
+
+      .languages{
+        margin-top: 10px;
+      }
+    }
+  }
+
+  #filter{
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+  }
+}

@@ -1,1 +1,58 @@
-p=document
+doctype html
+html
+  head
+    - var title = "TranscribePA" 
+    include includes/head.pug
+    
+    link(href = "/dist/CSS/transcribe.css" rel = "stylesheet" type = "text/css")
+  body
+    include includes/nav.pug
+
+    #body.container
+      h1 Title 
+      h2.is-heading Collection Name 
+      br
+      p#lines(style = "display:none")= document.lines  
+      #editor.columns
+        .column.is-narrow
+          img(src = "/uploads/" + document.img)
+        .column#text-editor
+          p#text(contenteditable = "true")!= document.lines.replace(/\n/g, "<br>")    
+          .field.languages
+            .field 
+              label.label Languages: 
+              input.input(type = "text" value = document.languages.join(", "))
+              p.help Edit only if the list of languages above is incorrect
+
+      //Navigation 
+      #filter.level 
+        .level-left 
+          .level-item.field-label
+            label.label Filter:
+          .level-item.field-body
+            //- .field.is-narrow
+            //-   span.select
+            //-     select#languages
+            //-       option(selected value = "all") All Languages 
+            //-       each language in languages
+            //-         option(value = language)= codeToName(language) 
+            .field.is-narrow
+              span.select
+                select#handwritten 
+                  option(selected value = "all") Any Type 
+                  option(value = "true") Handwritten
+                  option(value = "false") Typed
+            //- .field.is-narrow
+            //-   span.select
+            //-     select#handwritten 
+            //-       option(selected value = "all") Any Collection  
+        .level-right
+          .level-item
+            a.button(onclick = "reset()") Reset
+          .level-item
+            a.button(onclick = "location.reload()") Skip
+
+    include includes/footer.pug
+    
+    script(src = "/bower_components/jquery/dist/jquery.min.js")
+    script(src = "/dist/JS/transcribe-min.js")

@@ -1,0 +1,1 @@
+function reset(e){$("#text").html($("#lines").html().replace(/\n/g,"<br/>"))}
