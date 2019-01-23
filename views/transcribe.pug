@@ -10,7 +10,7 @@ html
 
     #body.container
       h1 Title 
-      h2.is-heading Collection Name 
+      h2.is-heading= collection.name
       br
       p#lines(style = "display:none")= document.lines  
       #editor.columns
@@ -22,7 +22,7 @@ html
             .field 
               label.label Languages: 
               input.input(type = "text" value = document.languages.join(", "))
-              p.help Edit only if the list of languages above is incorrect
+              p.help Edit the list above so it includes all languages used in the document.
 
       //Navigation 
       #filter.level 

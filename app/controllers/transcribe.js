@@ -29,11 +29,15 @@ router.get('/', async function(req, res){
     const result = await Document.findOne(filter).skip(Math.floor(Math.random() * count)).exec();
 
     if(result == null) res.render("404"); //TODO: make this an error page instead
-    else res.render("transcribe", {
+
+    const collection = await Collection.findOne({"_id": result.collection_id});
+
+    if(result) res.render("transcribe", {
       document: result,
       languages: languages,
       codeToName: languageCodeToName,
-      collections: collections
+      collections: collections,
+      collection: collection
     });
   }
   catch{
