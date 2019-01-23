@@ -30,22 +30,24 @@ html
           .level-item.field-label
             label.label Filter:
           .level-item.field-body
-            //- .field.is-narrow
-            //-   span.select
-            //-     select#languages
-            //-       option(selected value = "all") All Languages 
-            //-       each language in languages
-            //-         option(value = language)= codeToName(language) 
+            .field.is-narrow
+              span.select
+                select#languages
+                  option(selected value = "all") All Languages 
+                  each language in languages
+                    option(value = language)= codeToName(language) 
             .field.is-narrow
               span.select
                 select#handwritten 
                   option(selected value = "all") Any Type 
                   option(value = "true") Handwritten
                   option(value = "false") Typed
-            //- .field.is-narrow
-            //-   span.select
-            //-     select#handwritten 
-            //-       option(selected value = "all") Any Collection  
+            .field.is-narrow
+              span.select
+                select#collection 
+                  option(selected value = "all") Any Collection  
+                  each collection in collections
+                    option(value = collection._id)= collection.name
         .level-right
           .level-item
             a.button(onclick = "reset()") Reset
@@ -55,4 +57,5 @@ html
     include includes/footer.pug
     
     script(src = "/bower_components/jquery/dist/jquery.min.js")
+    script(src = "/dist/JS/urlcontrol-min.js")
     script(src = "/dist/JS/transcribe-min.js")
