@@ -23,6 +23,12 @@
       #text{
         flex: 2;
         overflow-y: scroll;
+        border: 2px solid $gray;
+        padding: 10px;
+
+        &:focus{
+          outline: 0;
+        }
       }
 
       .languages{
