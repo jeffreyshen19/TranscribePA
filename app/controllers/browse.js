@@ -2,9 +2,10 @@
 
 var express = require('express'),
   router = express.Router();
+var paginate = require('express-paginate');
 var Document = require("../models/Document");
 var Collection = require("../models/Collection");
-var paginate = require('express-paginate');
+var languageCodeToName = require('../helpers/languages');
 
 // See all completed documents
 router.get('/', paginate.middleware(50, 100), async (req, res) => {
@@ -20,9 +21,10 @@ router.get('/', paginate.middleware(50, 100), async (req, res) => {
 
   if(req.query.query) filter["$text"] = {"$search": req.query.query};
 
-  const [ results, itemCount ] = await Promise.all([
+  const [ results, itemCount, languages ] = await Promise.all([
       Document.find(filter).limit(req.query.limit).skip(req.skip).lean().exec(),
-      Document.count(filter)
+      Document.count(filter),
+      Document.find(filter).distinct('languages')
     ]);
 
   const pageCount = Math.ceil(itemCount / req.query.limit);
@@ -31,7 +33,9 @@ router.get('/', paginate.middleware(50, 100), async (req, res) => {
     documents: results,
     pageCount,
     itemCount,
-    pages: paginate.getArrayPages(req)(3, pageCount, req.query.page)
+    pages: paginate.getArrayPages(req)(3, pageCount, req.query.page),
+    languages: languages,
+    codeToName: languageCodeToName
   });
 });
 

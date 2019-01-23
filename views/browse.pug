@@ -32,8 +32,8 @@ html
                 span.select
                   select#languages
                     option(selected value = "all") All Languages 
-                    option(value = "zh") Mandarin (zh)
-                    option(value = "en") English (en)
+                    each language in languages
+                      option(value = language)= codeToName(language) 
               .field.is-narrow
                 span.select
                   select#handwritten 
