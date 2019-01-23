@@ -1,0 +1,28 @@
+@import "reset";
+@import "theme";
+@import "nav";
+
+nav{
+  background-color: $black;
+  position: relative;
+
+  a{
+    color: white;
+    &:hover{
+      color: $white;
+    }
+  }
+}
+
+#collections{
+  padding: 15px 40px;
+  
+  .column{
+    .img{
+      width: 250px;
+      height: 250px;
+      background-position: center;
+      background-size: cover;
+    }
+  }
+}

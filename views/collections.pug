@@ -3,13 +3,19 @@ html
   head
     - var title = "TranscribePA" //TODO: make this configurable
     include includes/head.pug
+    
+    link(href = "/dist/CSS/collections.css" rel = "stylesheet" type = "text/css")
   body
     include includes/nav.pug
     
-    ul 
+    #collections.columns.is-multiline.is-mobile.is-centered
       each collection in collections
-        li= collection 
-    
+        .column.is-narrow 
+          a(href = "/browse?collection=" + collection._id + "&completed=all")
+            .img(style = "background-image:url('/" + collection.img + "')")
+            h1= collection.name
+            p= collection.description  
+      
     include includes/footer.pug
-    
+
     script(src = "/bower_components/jquery/dist/jquery.min.js")

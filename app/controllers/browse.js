@@ -21,22 +21,36 @@ router.get('/', paginate.middleware(50, 100), async (req, res) => {
 
   if(req.query.query) filter["$text"] = {"$search": req.query.query};
 
-  const [ results, itemCount, languages ] = await Promise.all([
-      Document.find(filter).limit(req.query.limit).skip(req.skip).lean().exec(),
-      Document.count(filter),
-      Document.find(filter).distinct('languages')
-    ]);
+  if(req.query.collection) filter.collection_id = req.query.collection;
 
-  const pageCount = Math.ceil(itemCount / req.query.limit);
+  try{
+    const [ results, itemCount, languages ] = await Promise.all([
+        Document.find(filter).limit(req.query.limit).skip(req.skip).lean().exec(),
+        Document.count(filter),
+        Document.find(filter).distinct('languages')
+      ]);
 
-  res.render("browse", {
-    documents: results,
-    pageCount,
-    itemCount,
-    pages: paginate.getArrayPages(req)(3, pageCount, req.query.page),
-    languages: languages,
-    codeToName: languageCodeToName
-  });
+    const pageCount = Math.ceil(itemCount / req.query.limit);
+
+    res.render("browse", {
+      documents: results,
+      pageCount,
+      itemCount,
+      pages: paginate.getArrayPages(req)(3, pageCount, req.query.page),
+      languages: languages,
+      codeToName: languageCodeToName
+    });
+  }
+  catch{
+    res.render("browse", {
+      documents: [],
+      pageCount: 0,
+      itemCount: 0,
+      pages: paginate.getArrayPages(req)(3, 0, req.query.page),
+      languages: [],
+      codeToName: languageCodeToName
+    });
+  }
 });
 
 // View by collection
