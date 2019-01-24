@@ -2,6 +2,17 @@ function reset(text){
   $("#text").html($("#lines").html().replace(/\n/g,'<br/>'));
 }
 
+function submitTranscription(id){
+  $.post("/transcribe/finish", {
+    id: id,
+    transcription: $("#text").val(),
+    languages: $("#language-editor").val(),
+    name: ""
+  }).done(function(){
+    location.reload();
+  });
+}
+
 //Update document so dropdowns and search bar display properly
 if(getUrlParameter("handwritten")) $("select#handwritten").val(getUrlParameter("handwritten"));
 if(getUrlParameter("completed")) $("select#completed").val(getUrlParameter("completed"));

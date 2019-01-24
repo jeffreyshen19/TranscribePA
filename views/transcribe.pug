@@ -17,11 +17,12 @@ html
         .column.is-narrow
           img(src = "/uploads/" + document.img)
         .column#text-editor
-          p#text(contenteditable = "true")!= document.lines.replace(/\n/g, "<br>")    
+          //- p#text(contenteditable = "true")!= document.lines.replace(/\n/g, "<br>")    
+          textarea.is-size-6#text!= document.lines 
           .field.languages
             .field 
               label.label Languages: 
-              input.input(type = "text" value = document.languages.join(", "))
+              input.input#language-editor(type = "text" value = document.languages.join(", "))
               p.help Edit the list above so it includes all languages used in the document.
 
       //Navigation 
@@ -50,7 +51,7 @@ html
                     option(value = collection._id)= collection.name
         .level-right
           .level-item
-            a.button(onclick = "submitTranscription()") Finish
+            a.button(onclick = "submitTranscription('" + document._id + "')") Finish
           .level-item
             a.button(onclick = "reset()") Reset
           .level-item
