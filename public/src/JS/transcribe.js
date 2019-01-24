@@ -6,8 +6,7 @@ function submitTranscription(id){
   $.post("/transcribe/finish", {
     id: id,
     transcription: $("#text").val(),
-    languages: $("#language-editor").val(),
-    name: ""
+    languages: $("#language-editor").val()
   }).done(function(){
     location.reload();
   });
@@ -15,9 +14,8 @@ function submitTranscription(id){
 
 //Update document so dropdowns and search bar display properly
 if(getUrlParameter("handwritten")) $("select#handwritten").val(getUrlParameter("handwritten"));
-if(getUrlParameter("completed")) $("select#completed").val(getUrlParameter("completed"));
+if(getUrlParameter("collection")) $("select#collection").val(getUrlParameter("collection"));
 if(getUrlParameter("languages")) $("select#languages").val(getUrlParameter("languages"));
-if(getUrlParameter("query")) $("#search").val(getUrlParameter("query")) ;
 
 //Select control
 $("select#handwritten").change(function(){

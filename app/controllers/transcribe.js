@@ -51,23 +51,22 @@ router.post('/finish', function(req, res){ //TODO: add error handling
   Document.findOne({
     "_id": req.body.id
   }, function (err, document) {
-    console.log(document);
-    console.log(req.body);
+    if(!document.transcribed){
+      document.changelog.push({
+        "timestamp": Date.now(),
+        "prevVersion": document.lines,
+        "action": "TRANSCRIBE"
+      });
+      document.lines = req.body.transcription;
+      document.raw = req.body.transcription.replace(/\n/g, ' ').replace(/ - /g, "");
+      document.languages = req.body.languages;
+      document.transcribed = true;
 
-    document.changelog.push({
-      "name": req.body.name,
-      "timestamp": Date.now(),
-      "prevVersion": document.lines
-    });
-    document.lines = req.body.transcription;
-    document.raw = req.body.transcription.replace(/\n/g, ' ').replace(/ - /g, "");
-    document.languages = req.body.languages;
-    document.transcribed = true;
-
-    document.save(function (err, updatedDocument) {
-      if (err) return handleError(err);
-      res.redirect("/transcribe"); //TODO: add flash here
-    });
+      document.save(function (err, updatedDocument) {
+        if (err) return handleError(err);
+        res.redirect("/transcribe"); //TODO: add flash here
+      });
+    }
   });
 });
 

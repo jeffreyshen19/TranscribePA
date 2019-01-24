@@ -1,12 +1,16 @@
-function reset(text){
-  $("#text").html($("#lines").html().replace(/\n/g,'<br/>'));
+// Accept transcription
+function accept(id){
+  $.post("/verify/accept", {
+    id: id
+  }).done(function(){
+    location.reload();
+  });
 }
 
-function submitTranscription(id){
-  $.post("/transcribe/finish", {
-    id: id,
-    transcription: $("#text").val(),
-    languages: $("#language-editor").val()
+// Reject transcription
+function reject(id){
+  $.post("/verify/reject", {
+    id: id
   }).done(function(){
     location.reload();
   });
