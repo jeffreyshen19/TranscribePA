@@ -1,10 +1,9 @@
 meta(charset = "utf-8")
-meta(name = "Description" content = "{{site.description}}") 
-//TODO: Make this configurable
-meta(name = "author" content = "Jeffrey Shen")
+meta(name = "Description" content = config.description) 
+meta(name = "author" content = config.author)
 meta(name="viewport" content="width=device-width, initial-scale=1")
   
-title=title
+title= title + " • " + config.title
 
 link(href = "/bower_components/bulma/css/bulma.min.css" rel = "stylesheet" type = "text/css")
 link(href = "/bower_components/font-awesome/css/all.min.css" rel = "stylesheet" type = "text/css")

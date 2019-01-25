@@ -3,6 +3,7 @@ var express = require("express"),
 var mongoose = require("mongoose");
 var bodyParser = require('body-parser');
 var path = require('path');
+var config = require("./config.json");
 require('dotenv').config();
 
 // Configure App
@@ -15,6 +16,10 @@ app.use( bodyParser.json() );
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+app.use(function(req, res, next){ // Automatically pass config variables in local
+  res.locals.config = config;
+  next();
+});
 global.appRoot = path.resolve(__dirname);
 
 // Configure Database
