@@ -6,9 +6,10 @@ html
     link(href = "/dist/CSS/static.css" rel = "stylesheet" type = "text/css")
   body
     include includes/nav.pug
-    hr
+
     #body 
       != md(markdown)
+      
     include includes/footer.pug
     
     script(src = "/bower_components/jquery/dist/jquery.min.js")
