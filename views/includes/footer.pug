@@ -1,0 +1,18 @@
+footer
+  .columns 
+    .column 
+      h3= config.title 
+      p= config.description 
+    .column.has-text-right
+      .links.is-uppercase
+        a(href = "/about") About
+        a(href = "/help") Help
+        a(href = "/privacy") Privacy
+        a(href = "https://github.com/jeffreyshen19/TranscribePA") Source Code 
+      .icons 
+        each social in config.social  
+          a(href = social.url).is-size-5
+            i.fab(class = "fa-" + social.name)
+        a(href = "mailto:" + email).is-size-5
+          i.fas.fa-envelope 
+  

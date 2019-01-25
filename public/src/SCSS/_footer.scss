@@ -1,0 +1,26 @@
+footer{
+  background: $gray;
+  padding: 40px;
+  .links, .icons{
+    a{
+      color: $black;
+      &:hover{
+        color: $blue;
+      }
+    }
+  }
+
+  .links{
+    a{
+      margin-left: 8px;
+    }
+  }
+
+  .icons{
+    margin-top: 2px;
+
+    a{
+      margin-left: 6px;
+    }
+  }
+}

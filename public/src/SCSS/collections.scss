@@ -1,6 +1,7 @@
 @import "reset";
 @import "theme";
 @import "nav";
+@import "footer";
 
 nav{
   background-color: $black;
@@ -16,7 +17,7 @@ nav{
 
 #collections{
   padding: 15px 40px;
-  
+
   .column{
     .img{
       width: 250px;

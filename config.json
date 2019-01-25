@@ -1,5 +1,15 @@
 {
   "title": "TranscribePA",
   "description": "Exercitation adipisicing est qui ut aliqua culpa non dolor magna commodo.",
-  "author": "Jeffrey Shen"
+  "author": "Jeffrey Shen",
+  "email": "example@example.com",
+  "social": [{
+    "name": "facebook",
+    "url": "url"
+  }, {
+    "name": "instagram",
+    "url": "url"
+  }],
+  "institution": "Phillips Academy",
+  "institution_url": "url"
 }

@@ -27,6 +27,7 @@ $blue: #3a539b;
 $light-blue: #446cb3;
 $white: #e4f1fe;
 $gray: #f1f1f1;
+$green: #3fc380;
 
 // Text Styling
 h1, h2, h3, h4, h5, h6{
@@ -36,6 +37,14 @@ h1, h2, h3, h4, h5, h6{
 h1{
   font-size: 2.75rem;
   margin-bottom: 5px;
+}
+
+h2{
+  font-size: 2rem;
+}
+
+h3{
+  font-size: 1.75rem;
 }
 
 p, li, span, label, textarea{
@@ -60,5 +69,14 @@ a{
   font-family: "Open Sans";
   &:hover{
     color: $light-blue;
+  }
+}
+
+.is-green{
+  background: $green;
+  border: none;
+  color: white;
+  &:hover{
+    color: #eee;
   }
 }
