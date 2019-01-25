@@ -9,9 +9,6 @@ html
     include includes/nav.pug
 
     #body.container
-      h1 Title 
-      h2.is-heading= collection.name
-      br
       p#lines(style = "display:none")= document.lines  
       #editor.columns
         .column.is-narrow
@@ -31,9 +28,9 @@ html
           .level-item.field-label
             label.label Filter:
           .level-item.field-body
-            .field.is-narrow
+            .field.is-narrow(style="width:175px;")
               span.select
-                select#languages
+                select#languages()
                   option(selected value = "all") All Languages 
                   each language in languages
                     option(value = language)= codeToName(language) 
@@ -43,7 +40,7 @@ html
                   option(selected value = "all") Any Type 
                   option(value = "true") Handwritten
                   option(value = "false") Typed
-            .field.is-narrow
+            .field.is-narrow(style = "width:175px;")
               span.select
                 select#collection 
                   option(selected value = "all") Any Collection  
@@ -55,7 +52,10 @@ html
           .level-item
             a.button(onclick = "reset()") Reset
           .level-item
-            a.button(onclick = "location.reload()") Skip
+            a.button(onclick = "location.reload()") 
+              span.icon 
+                i.fas.fa-fast-forward
+              span Skip
 
     include includes/footer.pug
     

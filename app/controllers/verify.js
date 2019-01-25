@@ -42,7 +42,7 @@ router.get('/', async function(req, res){
     });
   }
   catch{
-    res.render("404");
+    res.render("404"); //TODO: make this an error
   }
 
 });
