@@ -9,15 +9,12 @@ html
     include includes/nav.pug
 
     #body.container
-      h1 Title 
-      h2.is-heading= collection.name
-      br
       p#lines(style = "display:none")= document.lines  
       #editor.columns
         .column.is-narrow
           img(src = "/uploads/" + document.img)
         .column#text-editor
-          p#text!= document.lines.replace(/\n/g, "<br>")
+          textarea.is-size-6(readonly)#text!= document.lines
           .field.languages
             .field 
               label.label Languages: 
@@ -29,9 +26,9 @@ html
           .level-item.field-label
             label.label Filter:
           .level-item.field-body
-            .field.is-narrow
+            .field.is-narrow(style="max-width:175px;")
               span.select
-                select#languages
+                select#languages()
                   option(selected value = "all") All Languages 
                   each language in languages
                     option(value = language)= codeToName(language) 
@@ -41,7 +38,7 @@ html
                   option(selected value = "all") Any Type 
                   option(value = "true") Handwritten
                   option(value = "false") Typed
-            .field.is-narrow
+            .field.is-narrow(style = "max-width:175px;")
               span.select
                 select#collection 
                   option(selected value = "all") Any Collection  
@@ -49,11 +46,10 @@ html
                     option(value = collection._id)= collection.name
         .level-right
           .level-item
-            a.button(onclick = "accept('" + document._id + "')") Accept
+            a.button.is-red(onclick = "reject('" + document._id + "')") Reject
           .level-item
-            a.button(onclick = "reject('" + document._id + "')") Reject
-          .level-item
-            a.button(onclick = "location.reload()") Skip
+            a.button.is-green(onclick = "accept('" + document._id + "')") Accept
+
 
     include includes/footer.pug
     

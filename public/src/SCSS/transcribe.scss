@@ -37,6 +37,7 @@
         overflow-y: scroll;
         border: 2px solid $gray;
         padding: 10px;
+        resize: none;
 
         &:focus{
           outline: 0;

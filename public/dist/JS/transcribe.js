@@ -1,5 +1,5 @@
 function reset(text){
-  $("#text").html($("#lines").html().replace(/\n/g,'<br/>'));
+  $("#text").val($("#lines").html());
 }
 
 function submitTranscription(id){
