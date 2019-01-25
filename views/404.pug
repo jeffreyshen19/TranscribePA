@@ -1,0 +1,12 @@
+doctype html
+html
+  head
+    - var title = "404"
+    include includes/head.pug
+    
+    link(href = "/dist/CSS/404.css" rel = "stylesheet" type = "text/css")
+  body
+    .columns.is-desktop.is-vcentered.is-centered(style = "height:100vh;text-align:center")
+      .column
+        h1 404
+        p Sorry, that page does not exist.
