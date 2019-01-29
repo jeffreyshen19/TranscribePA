@@ -1,0 +1,23 @@
+doctype html
+html
+  head
+    - var title = "Dashboard"
+    include ../includes/head.pug
+    
+    link(href = "/dist/css/admin.css" rel = "stylesheet" type = "text/css")
+  body
+    include ../includes/nav.pug
+    
+    .columns 
+      .column.is-narrow 
+        a(href = "/admin") Home
+        br
+        a(href = "/admin/review") Review Documents 
+        br
+        a(href = "/admin/collections") Manage Collections  
+        br
+        a(href = "/admin/create") Create Collections 
+      .column
+        block body
+    
+    script(src = "/bower_components/jquery/dist/jquery.min.js")

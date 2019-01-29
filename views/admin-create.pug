@@ -1,0 +1,17 @@
+extends layouts/dashboard
+
+block body
+  form(action = "/admin/new-document" method = "post" enctype = "multipart/form-data")
+    input(type = "file" name = "image")
+    input(type = "submit" value = "SUBMIT")
+      
+  form(action = "/admin/new-collection" method = "post" enctype = "multipart/form-data")
+    input(type = "text" name = "name")
+    br
+    input(type = "text" name = "description")
+    br
+    input(type = "file" name = "zip")
+    br
+    input(type = "file" name = "img")
+    br
+    input(type = "submit" value = "SUBMIT")

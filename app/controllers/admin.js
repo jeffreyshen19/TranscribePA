@@ -16,6 +16,22 @@ router.get("/", function(req, res){
   res.render("admin");
 });
 
+// Review documents
+router.get("/review", function(req, res){
+  res.render("admin-review");
+});
+
+// Manage collections
+router.get("/collections", function(req, res){
+  res.render("admin-collections");
+});
+
+// Create collection
+router.get("/create", function(req, res){
+  res.render("admin-create");
+});
+
+
 // Create Collection and add its documents
 router.post("/new-collection", multer.fields([{name: 'zip', maxCount: 1}, {name: 'img', maxCount: 1}]), function(req, res){
   var name = req.body.name,
