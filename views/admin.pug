@@ -1,3 +1,30 @@
 extends layouts/dashboard
 
 block body
+  h1 Dashboard 
+  #info.columns
+    .column.is-narrow.info-box 
+      h2 #{collections.length} Collection 
+      a.button(href = "/admin/create") Create Collection 
+      a.button(href = "/admin/collections") Manage Collections 
+    .column.is-narrow.info-box 
+      h2 36 Documents Need Review 
+      a.button(href = "/admin/review") Review Them 
+    .column.is-narrow.info-box 
+      #pie(data-completed = documents[0].param_counts.completed data-raw = documents[0].param_counts.raw data-transcribed = documents[0].param_counts.transcribed data-verified = documents[0].param_counts.verified)
+  hr 
+  #collections.columns.is-multiline.is-centered.is-mobile 
+    each collection in collections
+      .column.is-narrow 
+        a(href = "/browse?collection=" + collection._id + "&completed=all")
+          .img(style = "background-image:url('/" + collection.img + "')")
+          h1= collection.name
+          p= collection.description  
+    #create-collection.column.is-narrow
+      .text
+        i.fas.fa-plus
+        h2 Create Collection
+        
+block scripts 
+  script(src = "/bower_components/d3/d3.min.js")
+  script(src = "/dist/JS/pie-min.js")

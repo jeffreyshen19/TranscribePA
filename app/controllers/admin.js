@@ -12,28 +12,78 @@ var multer = require("../middleware/multer");
 var ocr = require("../helpers/ocr.js");
 
 // Admin Dashboard
-router.get("/", function(req, res){
-  res.render("admin");
+router.get("/", function(req, res) {
+  Collection.find({}, function(err, collections) {
+    Document.aggregate([{
+        "$group": {
+          "_id": null,
+          "completed_count": {
+            "$sum": {
+              "$cond": ["$completed", 1, 0] /* similar to "$cond": [ { "$eq": [ "$param1", true ] }, 1, 0 ] */
+            }
+          },
+          "raw_count": {
+            "$sum": {
+              "$cond": ["$transcribed", 0, 1]
+            }
+          },
+          "transcribed_count": {
+            "$sum": {
+              "$cond": [{$and: [{$eq: ["$transcribed", true]}, {$eq: ["$verified", false]}]}, 1, 0]
+            }
+          },
+          "verified_count": {
+            "$sum": {
+              "$cond": [{$and: [{$eq: ["$verified", true]}, {$eq: ["$completed", false]}]}, 1, 0]
+            }
+          }
+        }
+      },
+      {
+        "$project": {
+          "_id": 0,
+          "param_counts": {
+            "completed": "$completed_count",
+            "raw": "$raw_count",
+            "transcribed": "$transcribed_count",
+            "verified": "$verified_count"
+          }
+        }
+      }
+    ], function(err, documents){
+      res.render("admin", {
+        collections: collections,
+        documents: documents
+      });
+    });
+
+  });
 });
 
 // Review documents
-router.get("/review", function(req, res){
+router.get("/review", function(req, res) {
   res.render("admin-review");
 });
 
 // Manage collections
-router.get("/collections", function(req, res){
+router.get("/collections", function(req, res) {
   res.render("admin-collections");
 });
 
 // Create collection
-router.get("/create", function(req, res){
+router.get("/create", function(req, res) {
   res.render("admin-create");
 });
 
 
 // Create Collection and add its documents
-router.post("/new-collection", multer.fields([{name: 'zip', maxCount: 1}, {name: 'img', maxCount: 1}]), function(req, res){
+router.post("/new-collection", multer.fields([{
+  name: 'zip',
+  maxCount: 1
+}, {
+  name: 'img',
+  maxCount: 1
+}]), function(req, res) {
   var name = req.body.name,
     description = req.body.description,
     slug = slugify(req.body.name.toLowerCase());
@@ -45,7 +95,7 @@ router.post("/new-collection", multer.fields([{name: 'zip', maxCount: 1}, {name:
     img: path.relative(appRoot, req.files.img[0].path)
   });
 
-  collection.save(function (err) {
+  collection.save(function(err) {
     if (err) console.log(err);
     res.send("Collection created! Uploading documents rn");
 
@@ -56,24 +106,23 @@ router.post("/new-collection", multer.fields([{name: 'zip', maxCount: 1}, {name:
     // Unzip the file
     fs.createReadStream(req.files.zip[0].path)
       .pipe(unzipper.Parse())
-      .on('entry', function (entry) {
-        if(!entry.path.includes("__MACOSX") && (entry.path.includes(".jpeg") || entry.path.includes(".jpg") || entry.path.includes(".png"))) {
+      .on('entry', function(entry) {
+        if (!entry.path.includes("__MACOSX") && (entry.path.includes(".jpeg") || entry.path.includes(".jpg") || entry.path.includes(".png"))) {
           files.push(entry.path.replace(/^[^\/]+\//gi, ""));
           entry.pipe(fs.createWriteStream(appRoot + "/uploads/" + slug + "/" + entry.path.replace(/^[^\/]+\//gi, "")));
-        }
-        else entry.autodrain();
+        } else entry.autodrain();
 
       })
-      .on('close', function () {
+      .on('close', function() {
         // Delete the ZIP
-        fs.unlink(req.files.zip[0].path, function(err){
-          if(err) console.log("err");
+        fs.unlink(req.files.zip[0].path, function(err) {
+          if (err) console.log("err");
         });
 
-        function bulkOCR(files, i){
+        function bulkOCR(files, i) {
           console.log(files[i]);
-          if(i < files.length){
-            ocr(appRoot + "/uploads/" + slug + "/" + files[i], {}, function(data){
+          if (i < files.length) {
+            ocr(appRoot + "/uploads/" + slug + "/" + files[i], {}, function(data) {
 
               var document = new Document({
                 lines: data.lines,
@@ -89,7 +138,7 @@ router.post("/new-collection", multer.fields([{name: 'zip', maxCount: 1}, {name:
                 collection_id: collection._id
               });
 
-              document.save(function (err) {
+              document.save(function(err) {
                 if (err) console.log(err);
                 bulkOCR(files, i + 1);
               });
@@ -106,10 +155,10 @@ router.post("/new-collection", multer.fields([{name: 'zip', maxCount: 1}, {name:
 });
 
 // Add a document to an existing collection
-router.post("/new-document", multer.single("image"), function(req, res){
-  ocr(req.file.path, {}, function(data){
+router.post("/new-document", multer.single("image"), function(req, res) {
+  ocr(req.file.path, {}, function(data) {
 
-    if(data === "ERROR") res.send(data);
+    if (data === "ERROR") res.send(data);
 
     console.log(data);
 
@@ -126,7 +175,7 @@ router.post("/new-document", multer.single("image"), function(req, res){
       img: path.relative(appRoot, req.file.path)
     });
 
-    document.save(function (err) {
+    document.save(function(err) {
       if (err) console.log(err);
       res.send("done!");
     });
