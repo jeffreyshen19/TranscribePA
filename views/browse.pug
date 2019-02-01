@@ -6,72 +6,73 @@ html
     
     link(href = "/dist/CSS/browse.css" rel = "stylesheet" type = "text/css")
   body
-    include includes/nav.pug
-    
-    header
-      .text.is-centered.is-vcentered
-        h1 Explore!
-        br
-        form#search-form
-          .field.has-addons
-            .control 
-              input.input#search(type = "text" name = "query" placeholder = "Search full-text transcriptions")
-            .control  
-              input.button.is-info(type = "submit" value = "SEARCH")
-        br        
-        p Or, <a href = "/browse/collections">browse by collection</a>.
+    #container
+      include includes/nav.pug
       
-    #body
-      #browse(style = "visibility:hidden")
-        .level.item
-          .level-left
-            .level-item.field-label
-              label.label Filter: 
-            .level-item.field-body
-              .field.is-narrow(style="max-width:175px;")
-                span.select
-                  select#languages
-                    option(selected value = "all") All Languages 
-                    each language in languages
-                      option(value = language)= codeToName(language) 
-              .field.is-narrow
-                span.select
-                  select#handwritten 
-                    option(selected value = "all") Any Type 
-                    option(value = "true") Handwritten
-                    option(value = "false") Typed
-              .field.is-narrow
-                span.select
-                  select#completed  
-                    option(value = "all") All Documents 
-                    option(selected value = "true") Verified Documents
-                    option(value = "false") Unverified Documents
-        if documents.length == 0
+      header
+        .text.is-centered.is-vcentered
+          h1 Explore!
+          br
+          form#search-form
+            .field.has-addons
+              .control 
+                input.input#search(type = "text" name = "query" placeholder = "Search full-text transcriptions")
+              .control  
+                input.button.is-info(type = "submit" value = "SEARCH")
+          br        
+          p Or, <a href = "/browse/collections">browse by collection</a>.
+        
+      #body
+        #browse(style = "visibility:hidden")
           .level.item
-            p 
-              i.far.fa-frown 
-              | &nbsp;&nbsp;No results found for your search. 
-    
-        each document in documents 
-          .item
-            a(href = "/document/" + document._id)
-              img(src = "/uploads/" + document.img)
-              p= document.collection_id
+            .level-left
+              .level-item.field-label
+                label.label Filter: 
+              .level-item.field-body
+                .field.is-narrow(style="max-width:175px;")
+                  span.select
+                    select#languages
+                      option(selected value = "all") All Languages 
+                      each language in languages
+                        option(value = language)= codeToName(language) 
+                .field.is-narrow
+                  span.select
+                    select#handwritten 
+                      option(selected value = "all") Any Type 
+                      option(value = "true") Handwritten
+                      option(value = "false") Typed
+                .field.is-narrow
+                  span.select
+                    select#completed  
+                      option(value = "all") All Documents 
+                      option(selected value = "true") Verified Documents
+                      option(value = "false") Unverified Documents
+          if documents.length == 0
+            .level.item
+              p 
+                i.far.fa-frown 
+                | &nbsp;&nbsp;No results found for your search. 
+      
+          each document in documents 
+            .item
+              a(href = "/document/" + document._id)
+                img(src = "/uploads/" + document.img)
+                p= document.collection_id
 
-      if paginate.hasPreviousPages || paginate.hasNextPages(pageCount)
-        .pagination(role = "navigation" aria-label = "pagination")  
-          if paginate.hasPreviousPages
-            a(class="pagination-previous" href=paginate.href(true)) Previous 
-          if paginate.hasNextPages(pageCount)
-            a(class="pagination-next" href=paginate.href()) Next 
-          if pages
-            ul.pagination-list 
-              each page in pages
-                li 
-                  if page.number == currentPage
-                    a.pagination-link.current(href = page.url)= page.number
-                  else
-                    a.pagination-link(href = page.url)= page.number
+        if paginate.hasPreviousPages || paginate.hasNextPages(pageCount)
+          .pagination(role = "navigation" aria-label = "pagination")  
+            if paginate.hasPreviousPages
+              a(class="pagination-previous" href=paginate.href(true)) Previous 
+            if paginate.hasNextPages(pageCount)
+              a(class="pagination-next" href=paginate.href()) Next 
+            if pages
+              ul.pagination-list 
+                each page in pages
+                  li 
+                    if page.number == currentPage
+                      a.pagination-link.current(href = page.url)= page.number
+                    else
+                      a.pagination-link(href = page.url)= page.number
         
     include includes/footer.pug
     

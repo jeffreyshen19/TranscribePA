@@ -5,10 +5,11 @@ html
     
     link(href = "/dist/CSS/static.css" rel = "stylesheet" type = "text/css")
   body
-    include includes/nav.pug
+    #container
+      include includes/nav.pug
 
-    #body 
-      != md(markdown)
+      #body 
+        != md(markdown)
       
     include includes/footer.pug
     

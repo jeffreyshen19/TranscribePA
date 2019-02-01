@@ -88,3 +88,15 @@ a{
 .is-red{
   background: $red;
 }
+
+// Structure
+html, body{
+  height: 100%;
+  margin: 0;
+}
+
+#container{
+  min-height: 100%;
+  margin-bottom: -175px;
+  padding-bottom: 175px;
+}

@@ -6,15 +6,16 @@ html
     
     link(href = "/dist/CSS/collections.css" rel = "stylesheet" type = "text/css")
   body
-    include includes/nav.pug
-    
-    #collections.columns.is-multiline.is-mobile.is-centered
-      each collection in collections
-        .column.is-narrow 
-          a(href = "/browse?collection=" + collection._id + "&completed=all")
-            .img(style = "background-image:url('/" + collection.img + "')")
-            h1= collection.name
-            p= collection.description  
+    #container
+      include includes/nav.pug
+      
+      #collections.columns.is-multiline.is-mobile.is-centered
+        each collection in collections
+          .column.is-narrow 
+            a(href = "/browse?collection=" + collection._id + "&completed=all")
+              .img(style = "background-image:url('/" + collection.img + "')")
+              h1= collection.name
+              p= collection.description  
       
     include includes/footer.pug
 

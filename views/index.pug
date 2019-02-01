@@ -3,10 +3,12 @@ html
   head
     - var title = "Home" 
     include includes/head.pug
-  body
-    include includes/nav.pug
-    include includes/footer.pug
     
-    p= config.title
+    link(href = "/dist/CSS/main.css" rel = "stylesheet" type = "text/css")
+  body
+    #container 
+      include includes/nav.pug
+      
+    include includes/footer.pug
     
     script(src = "/bower_components/jquery/dist/jquery.min.js")

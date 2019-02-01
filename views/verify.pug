@@ -6,49 +6,50 @@ html
     
     link(href = "/dist/CSS/transcribe.css" rel = "stylesheet" type = "text/css")
   body
-    include includes/nav.pug
+    #container
+      include includes/nav.pug
 
-    #body.container
-      p#lines(style = "display:none")= document.lines  
-      #editor.columns
-        .column.is-narrow
-          img(src = "/uploads/" + document.img)
-        .column#text-editor
-          textarea.is-size-6(readonly)#text!= document.lines
-          .field.languages
-            .field 
-              label.label Languages: 
-              input.input#language-editor(type = "text" value = document.languages.join(", ") readonly)
+      #body.container
+        p#lines(style = "display:none")= document.lines  
+        #editor.columns
+          .column.is-narrow
+            img(src = "/uploads/" + document.img)
+          .column#text-editor
+            textarea.is-size-6(readonly)#text!= document.lines
+            .field.languages
+              .field 
+                label.label Languages: 
+                input.input#language-editor(type = "text" value = document.languages.join(", ") readonly)
 
-      //Navigation 
-      #filter.level 
-        .level-left 
-          .level-item.field-label
-            label.label Filter:
-          .level-item.field-body
-            .field.is-narrow(style="max-width:175px;")
-              span.select
-                select#languages()
-                  option(selected value = "all") All Languages 
-                  each language in languages
-                    option(value = language)= codeToName(language) 
-            .field.is-narrow
-              span.select
-                select#handwritten 
-                  option(selected value = "all") Any Type 
-                  option(value = "true") Handwritten
-                  option(value = "false") Typed
-            .field.is-narrow(style = "max-width:175px;")
-              span.select
-                select#collection 
-                  option(selected value = "all") Any Collection  
-                  each collection in collections
-                    option(value = collection._id)= collection.name
-        .level-right
-          .level-item
-            a.button.is-red(onclick = "reject('" + document._id + "')") Reject
-          .level-item
-            a.button.is-green(onclick = "accept('" + document._id + "')") Accept
+        //Navigation 
+        #filter.level 
+          .level-left 
+            .level-item.field-label
+              label.label Filter:
+            .level-item.field-body
+              .field.is-narrow(style="max-width:175px;")
+                span.select
+                  select#languages()
+                    option(selected value = "all") All Languages 
+                    each language in languages
+                      option(value = language)= codeToName(language) 
+              .field.is-narrow
+                span.select
+                  select#handwritten 
+                    option(selected value = "all") Any Type 
+                    option(value = "true") Handwritten
+                    option(value = "false") Typed
+              .field.is-narrow(style = "max-width:175px;")
+                span.select
+                  select#collection 
+                    option(selected value = "all") Any Collection  
+                    each collection in collections
+                      option(value = collection._id)= collection.name
+          .level-right
+            .level-item
+              a.button.is-red(onclick = "reject('" + document._id + "')") Reject
+            .level-item
+              a.button.is-green(onclick = "accept('" + document._id + "')") Accept
 
 
     include includes/footer.pug

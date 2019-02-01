@@ -1,10 +1,10 @@
 /*jshint esversion: 6*/
 
 var data = [
-  {name: "Completed", value: $("#pie").data("completed")},
-  {name: "Verified", value: $("#pie").data("verified")},
-  {name: "Transcribed", value: $("#pie").data("transcribed")},
-  {name: "Raw", value: $("#pie").data("raw")},
+  {name: "Completed", value: $("#pie").data("completed"), color: "#1f3a93"},
+  {name: "Verified", value: $("#pie").data("verified"), color: "#446cb3"},
+  {name: "Transcribed", value: $("#pie").data("transcribed"), color: "#89c4f4"},
+  {name: "Raw", value: $("#pie").data("raw"), color: "#e4f1fe"},
 ];
 var text = "";
 
@@ -14,7 +14,6 @@ var thickness = 40;
 var duration = 750;
 
 var radius = Math.min(width, height) / 2;
-var color = d3.scaleOrdinal(d3.schemeCategory10);
 
 var svg = d3.select("#pie")
   .append('svg')
@@ -59,12 +58,12 @@ var path = g.selectAll('path')
   .on("mouseout", function(d) {
       d3.select(this)
         .style("cursor", "none")
-        .style("fill", color(this._current))
+        .style("fill", d.data.color)
         .select(".text-group").remove();
     })
   .append('path')
   .attr('d', arc)
-  .attr('fill', (d,i) => color(i))
+  .attr('fill', (d,i) => d.data.color)
   .on("mouseover", function(d) {
       d3.select(this)
         .style("cursor", "pointer")
@@ -73,7 +72,7 @@ var path = g.selectAll('path')
   .on("mouseout", function(d) {
       d3.select(this)
         .style("cursor", "none")
-        .style("fill", color(this._current));
+        .style("fill", d.color);
     })
   .each(function(d, i) { this._current = i; });
 
