@@ -1,26 +1,46 @@
 footer{
   background: $gray;
   height: 175px;
-  .links, .icons{
-    a{
-      color: $black;
-      &:hover{
-        color: $blue;
+  padding: 0 50px;
+
+  .columns{
+    height: 100%;
+
+    .left{
+      h3{
+        font-size: 2.5rem;
+        margin-bottom: 3px;
+      }
+
+      p{
+        font-size: 1.1rem;
       }
     }
-  }
 
-  .links{
-    a{
-      margin-left: 8px;
-    }
-  }
+    .right{
+      .links, .icons{
+        a{
+          color: $black;
+          &:hover{
+            color: $blue;
+          }
+        }
+      }
 
-  .icons{
-    margin-top: 2px;
+      .links{
+        a{
+          margin-left: 8px;
+          font-size: 1.3rem;
+        }
+      }
 
-    a{
-      margin-left: 6px;
+      .icons{
+        margin-top: 8px;
+
+        a{
+          margin-left: 6px;
+        }
+      }
     }
   }
 }
