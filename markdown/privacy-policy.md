@@ -1,6 +1,6 @@
 # Privacy Policy
 
-## How We Collection and Use Information
+## How We Collect and Use Information
 
 TranscribePA does not collect any personal user data except for timestamps and anonymized website statistics.
 

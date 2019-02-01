@@ -5,4 +5,20 @@
 
 #body{
   padding: 25px 40px;
+
+  h1{
+    font-size: 2rem;
+    border-bottom: 1px solid #dcdcdc;
+    padding-bottom: 8px;
+  }
+
+  h2{
+    font-size: 1.5rem;
+    margin-top: 15px;
+  }
+
+  h1, h2, p{
+    margin-bottom: 5px;
+  }
+
 }
