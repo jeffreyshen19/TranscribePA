@@ -3,6 +3,8 @@ var express = require("express"),
 var mongoose = require("mongoose");
 var bodyParser = require('body-parser');
 var path = require('path');
+var passport = require("passport");
+
 var config = require("./config.json");
 require('dotenv').config();
 
