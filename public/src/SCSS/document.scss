@@ -3,18 +3,23 @@
 @import "nav";
 @import "footer";
 
-hr{
-  margin: 0;
-}
-
 #body{
-  padding: 15px 40px;
+  padding: 25px 40px;
+
+  .collection{
+    font-size: 1.3rem;
+  }
 
   .text{
     white-space: nowrap;
   }
-}
 
-.steps-content p{
-  margin-top: 2px;
+  .steps-content p{
+    margin-top: 2px;
+  }
+
+  h3{
+    margin-bottom: 2px;
+  }
+
 }

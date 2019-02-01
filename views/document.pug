@@ -12,8 +12,9 @@ html
         include includes/nav.pug
         
       #body
-        h1 Title 
-        h2.is-heading Collection Name 
+        h1.is-size-2 Title 
+        a.collection(href = "/browse?collection=" + collection._id + "&completed=all")= collection.name 
+        br
         br
         .columns
           .column
@@ -22,13 +23,6 @@ html
             p.text!= document.lines.replace(/\n/g, "<br>")    
         hr
         br
-        h2 Metadata 
-        ul 
-          li <strong>Handwritten</strong>: #{document.handwritten}
-          li <strong>Languages</strong>: #{document.languages}
-        br 
-        h2 Changelog 
-        p= document.changelog
         br
         ul.steps.has-content-centered 
           li.steps-segment(class = !document.transcribed ? "is-active" : "")
@@ -55,7 +49,14 @@ html
                 i.far.fa-thumbs-up
             .steps-content 
               p Approved
-
+        br
+        hr
+        h3 Metadata 
+        ul 
+          li <strong>Handwritten</strong>: #{document.handwritten}
+          li <strong>Languages</strong>: #{document.languages}
+        br
+          
     include includes/footer.pug
     
     script(src = "/bower_components/jquery/dist/jquery.min.js")

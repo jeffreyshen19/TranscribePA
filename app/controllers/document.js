@@ -9,7 +9,11 @@ router.get('/:id', function(req, res){
   Document.findOne({
     "_id": req.params.id
   }, function(err, document){
-    res.render("document", {"document": document});
+    Collection.findOne({
+      "_id": document.collection_id
+    }, function(err, collection){
+      res.render("document", {"document": document, "collection": collection});
+    });
   });
 });
 
