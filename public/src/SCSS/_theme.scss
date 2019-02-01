@@ -1,18 +1,18 @@
 // Fonts
 @font-face {
-  font-family: "Open Sans";
-  src: url("/assets/fonts/Open_Sans/OpenSans-Regular.ttf");
+  font-family: "Source Sans";
+  src: url("/assets/fonts/Source_Sans_Pro/SourceSansPro-Regular.ttf");
 }
 
 @font-face {
-  font-family: "Open Sans";
-  src: url("/assets/fonts/Open_Sans/OpenSans-Bold.ttf");
+  font-family: "Source Sans";
+  src: url("/assets/fonts/Source_Sans_Pro/SourceSansPro-Bold.ttf");
   font-weight: bold;
 }
 
 @font-face {
-  font-family: "Open Sans";
-  src: url("/assets/fonts/Open_Sans/OpenSans-Italic.ttf");
+  font-family: "Source Sans";
+  src: url("/assets/fonts/Source_Sans_Pro/SourceSansPro-Italic.ttf");
   font-style: italic;
 }
 
@@ -48,8 +48,8 @@ h3{
   font-size: 1.75rem;
 }
 
-p, li, span, label, textarea{
-  font-family: "Open Sans";
+p, li, span, label, textarea, a{
+  font-family: "Source Sans";
 }
 
 strong{
@@ -67,7 +67,6 @@ strong{
 
 a{
   color: $blue;
-  font-family: "Open Sans";
   &:hover{
     color: $light-blue;
   }
@@ -87,6 +86,11 @@ a{
 
 .is-red{
   background: $red;
+}
+
+.is-serif{
+  font-family: georgia;
+  font-weight: bold;
 }
 
 // Structure
