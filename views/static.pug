@@ -6,7 +6,8 @@ html
     link(href = "/dist/CSS/static.css" rel = "stylesheet" type = "text/css")
   body
     #container
-      include includes/nav.pug
+      .inverted
+        include includes/nav.pug
 
       #body 
         != md(markdown)
