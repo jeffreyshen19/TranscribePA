@@ -72,9 +72,12 @@ a{
   }
 }
 
-.is-green, .is-red{
+.is-green, .is-red, .is-blue{
   border: none;
   color: white;
+}
+
+a.is-green, a.is-red, a.is-blue{
   &:hover{
     color: #eee;
   }
@@ -86,6 +89,10 @@ a{
 
 .is-red{
   background: $red;
+}
+
+.is-blue{
+  background: $blue;
 }
 
 .is-serif{

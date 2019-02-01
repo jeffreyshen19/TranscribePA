@@ -12,6 +12,10 @@ html
         include includes/nav.pug
         
       #body
+        .notification.is-blue 
+          button.delete(onclick = "$(this).parent().hide()") 
+          p <strong>This document has not been marked as complete</strong>, meaning the transcription may be incomplete or incorrect. You can help us by <a href = "/transcribe">transcribing</a> or <a href = "/verify">verifying</a> documents.
+          
         h1.is-size-2 Title 
         a.collection(href = "/browse?collection=" + collection._id + "&completed=all")= collection.name 
         br
@@ -56,7 +60,6 @@ html
           li <strong>Handwritten</strong>: #{document.handwritten}
           li <strong>Languages</strong>: #{document.languages}
         br
-          
     include includes/footer.pug
     
     script(src = "/bower_components/jquery/dist/jquery.min.js")
