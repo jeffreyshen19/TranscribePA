@@ -3,28 +3,28 @@
 @import "nav";
 @import "footer";
 
-nav{
-  background-color: $black;
-
-  a{
-    color: white;
-    &:hover{
-      color: $white;
-    }
-  }
-
-  &:after{
-    height: 5px;
-    width: 100%;
-    background: #6190E8;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to left, #A7BFE8, #6190E8);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to left, #A7BFE8, #6190E8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 49px;
-  }
-}
+// nav{
+//   background-color: $black;
+//
+//   a{
+//     color: white;
+//     &:hover{
+//       color: $white;
+//     }
+//   }
+//
+//   &:after{
+//     height: 5px;
+//     width: 100%;
+//     background: #6190E8;  /* fallback for old browsers */
+//     background: -webkit-linear-gradient(to left, #A7BFE8, #6190E8);  /* Chrome 10-25, Safari 5.1-6 */
+//     background: linear-gradient(to left, #A7BFE8, #6190E8); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+//     content: '';
+//     position: absolute;
+//     left: 0;
+//     top: 49px;
+//   }
+// }
 
 #body{
   height: calc(100vh - 54px);

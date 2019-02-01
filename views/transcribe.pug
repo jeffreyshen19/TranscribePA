@@ -7,7 +7,8 @@ html
     link(href = "/dist/CSS/transcribe.css" rel = "stylesheet" type = "text/css")
   body
     #container 
-      include includes/nav.pug
+      .inverted 
+        include includes/nav.pug
 
       #body.container
         p#lines(style = "display:none")= document.lines  
