@@ -4,6 +4,7 @@ html
     - var title = "TranscribePA" //TODO: make this show the document title 
     include includes/head.pug
     
+    link(href = "/libs/bulma-steps.min.css" rel = "stylesheet" type = "text/css")
     link(href = "/dist/CSS/document.css" rel = "stylesheet" type = "text/css")
   body
     #container
@@ -12,7 +13,6 @@ html
       #body
         h1 Title 
         h2.is-heading Collection Name 
-        p= document.completed
         br
         .columns
           .column
@@ -28,6 +28,32 @@ html
         br 
         h2 Changelog 
         p= document.changelog
+        br
+        ul.steps.has-content-centered 
+          li.steps-segment(class = !document.transcribed ? "is-active" : "")
+            span.steps-marker
+              .icon
+                i.fas.fa-upload
+            .steps-content 
+              p Uploaded
+          li.steps-segment(class = (document.transcribed && !document.verified) ? "is-active" : "")
+            span.steps-marker
+              .icon
+                i.fa.fa-keyboard
+            .steps-content 
+              p Transcribed
+          li.steps-segment(class = (document.verified && !document.completed) ? "is-active" : "")
+            span.steps-marker
+              .icon 
+                i.fas.fa-shield-alt
+            .steps-content 
+              p Verified 
+          li.steps-segment(class = document.completed ? "is-active" : "") 
+            span.steps-marker
+              .icon 
+                i.far.fa-thumbs-up
+            .steps-content 
+              p Approved
 
     include includes/footer.pug
     
