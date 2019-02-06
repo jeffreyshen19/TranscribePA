@@ -9,6 +9,17 @@ html
     #container 
       include includes/nav.pug
       
+      header
+        .overlay
+        .text.is-centered.is-vcentered
+          h1.is-size-1.is-serif=config.title
+          p.is-size-3 Help us bring the #{config.institution} into the 21st century!
+          br
+          br
+          a.button.is-blue.is-medium(href = "/tutorial") Get Started! 
+      
     include includes/footer.pug
     
     script(src = "/bower_components/jquery/dist/jquery.min.js")
+    //- /* script(src = "/bower_components/typed.js/lib/typed.min.js") */
+    //- /* script(src = "/dist/JS/main-min.js") */

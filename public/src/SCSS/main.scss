@@ -1,4 +1,50 @@
 @import "reset";
 @import "theme";
 @import "nav";
+@import "header";
 @import "footer";
+
+nav{
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  a{
+    color: white;
+    &:hover{
+      color: $white;
+    }
+  }
+}
+
+header{
+  background-image: url("/uploads/name/StearnsCorrFolder1956_011A.jpg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: relative;
+  color: white;
+
+  .overlay{
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    z-index: 50;
+    background: $black;
+    opacity: 0.4;
+  }
+
+  a{
+    color: white;
+    font-weight: bold;
+    &:hover{
+      color: $white;
+    }
+  }
+
+  .text{
+    z-index: 51;
+  }
+}
