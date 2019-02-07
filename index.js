@@ -11,6 +11,7 @@ require('dotenv').config();
 // Configure App
 app.use(express.static("./public"));
 app.use('/bower_components',  express.static(__dirname + '/bower_components'));
+app.use('/graphics',  express.static(__dirname + '/graphics'));
 app.use('/uploads',  express.static(__dirname + '/uploads'));
 app.set('views', './views');
 app.set('view engine', 'pug');
