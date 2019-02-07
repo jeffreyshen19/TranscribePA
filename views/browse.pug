@@ -52,7 +52,9 @@ html
               p 
                 i.far.fa-frown 
                 | &nbsp;&nbsp;No results found for your search. 
-      
+          else 
+            .level.item 
+              p All the data on this website is public! If you'd like to download the data for your current query (filters &amp; search terms), click <a id = "download-link">here</a>. The data is provided as JSON.       
           each document in documents 
             .item
               a(href = "/document/" + document._id)

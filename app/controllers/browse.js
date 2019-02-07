@@ -60,4 +60,30 @@ router.get('/collections', function(req, res){
   });
 });
 
+// Download data
+router.get('/data', function(req, res){
+  var filter = {  };
+
+  if(req.query.completed == null || req.query.completed == "true") filter.completed = true;
+  else if(req.query.completed == "false") filter.completed = false;
+
+  if(req.query.handwritten == "true") filter.handwritten = true;
+  else if(req.query.handwritten == "false") filter.handwritten = false;
+
+  if(req.query.languages && req.query.languages != "all") filter.languages = {"$all": [req.query.languages]};
+
+  if(req.query.query) filter["$text"] = {"$search": req.query.query};
+
+  if(req.query.collection) filter.collection_id = req.query.collection;
+
+  try{
+    Document.find(filter, function(err, results){
+      res.json(results);
+    })
+  }
+  catch{
+    res.json([]);
+  }
+});
+
 module.exports = router;

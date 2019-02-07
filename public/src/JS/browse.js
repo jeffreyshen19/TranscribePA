@@ -8,6 +8,9 @@ $(window).on("load", function(){
     fitWidth: true,
     transitionDuration: '0.2s'
   });
+  var downloadLink = "/browse/data";
+  if(window.location.href.split("?")[1]) downloadLink += "?" + window.location.href.split("?")[1];
+  $("#download-link").attr("href", downloadLink);
   $("#browse").css("visibility", "visible");
 });
 
