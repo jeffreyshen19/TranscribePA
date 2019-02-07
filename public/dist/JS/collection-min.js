@@ -1,0 +1,1 @@
+$(".collection").hover(function(n){},function(n){});

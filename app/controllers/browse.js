@@ -60,18 +60,4 @@ router.get('/collections', function(req, res){
   });
 });
 
-// View all documents in one collection
-router.get('/collections/:slug', function(req, res){
-  Collection.findOne({
-    slug: slug
-  }, function(err, collection){
-    Document.find({
-      "completed": true,
-      "collection_id": collection._id
-    }, function(err, documents){
-      res.render("browse", {documents: documents});
-    });
-  });
-});
-
 module.exports = router;
