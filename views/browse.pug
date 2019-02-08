@@ -59,7 +59,7 @@ html
             .item
               a(href = "/document/" + document._id)
                 img(src = "/uploads/" + document.img)
-                p= document.collection_id
+                p= document.name
 
         if paginate.hasPreviousPages || paginate.hasNextPages(pageCount)
           .pagination(role = "navigation" aria-label = "pagination")  

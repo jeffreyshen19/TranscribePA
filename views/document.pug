@@ -16,7 +16,7 @@ html
           button.delete(onclick = "$(this).parent().hide()") 
           p <strong>This document has not been marked as complete</strong>, meaning the transcription may be incomplete or incorrect. You can help us by <a href = "/transcribe">transcribing</a> or <a href = "/verify">verifying</a> documents.
           
-        h1.is-size-2 Title 
+        h1.is-size-2= document.name
         a.collection(href = "/browse?collection=" + collection._id + "&completed=all")= collection.name 
         br
         br
