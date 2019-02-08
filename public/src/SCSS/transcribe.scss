@@ -31,6 +31,8 @@
       #text{
         flex: 2;
         overflow-y: scroll;
+        overflow-x: scroll;
+        white-space: nowrap;
         border: 2px solid $gray;
         padding: 10px;
         resize: none;
