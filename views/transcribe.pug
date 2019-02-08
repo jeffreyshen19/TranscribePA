@@ -10,61 +10,65 @@ html
       .inverted 
         include includes/nav.pug
 
-      #body.container
-        if messages.length > 0
-          .notification.is-green 
-            button.delete(onclick = "$(this).parent().hide()") 
-            p= messages
-        p#lines(style = "display:none")= document.lines  
-        #editor.columns
-          .column.is-narrow
-            img(src = "/uploads/" + document.img)
-          .column#text-editor
-            //- p#text(contenteditable = "true")!= document.lines.replace(/\n/g, "<br>")    
-            textarea.is-size-6#text!= document.lines 
-            .field.languages
-              .field 
-                label.label Languages: 
-                input.input#language-editor(type = "text" value = document.languages.join(", "))
-                p.help Edit the list above so it includes all languages used in the document.
-
-        //Navigation 
-        #filter.level 
-          .level-left 
-            .level-item.field-label
-              label.label Filter:
-            .level-item.field-body
-              .field.is-narrow(style="max-width:175px;")
-                span.select
-                  select#languages()
-                    option(selected value = "all") All Languages 
-                    each language in languages
-                      option(value = language)= codeToName(language) 
-              .field.is-narrow
-                span.select
-                  select#handwritten 
-                    option(selected value = "all") Any Type 
-                    option(value = "true") Handwritten
-                    option(value = "false") Typed
-              .field.is-narrow(style = "max-width:175px;")
-                span.select
-                  select#collection 
-                    option(selected value = "all") Any Collection  
-                    each collection in collections
-                      option(value = collection._id)= collection.name
-          .level-right
-            .level-item
-              a.button(onclick = "reset()") 
-                span.icon 
-                  i.fas.fa-undo
-                span Reset
-            .level-item
-              a.button(onclick = "location.reload()") 
-                span.icon 
-                  i.fas.fa-fast-forward
-                span Skip
-            .level-item
-              a.button.is-green(onclick = "submitTranscription('" + document._id + "')") Finish
+      if document
+        #body.container
+          if messages.length > 0
+            .notification.is-green 
+              button.delete(onclick = "$(this).parent().hide()") 
+              p= messages
+              
+          p#lines(style = "display:none")= document.lines  
+          #editor.columns
+            .column.is-narrow
+              img(src = "/uploads/" + document.img)
+            .column#text-editor
+              //- p#text(contenteditable = "true")!= document.lines.replace(/\n/g, "<br>")    
+              textarea.is-size-6#text!= document.lines 
+              .field.languages
+                .field 
+                  label.label Languages: 
+                  input.input#language-editor(type = "text" value = document.languages.join(", "))
+                  p.help Edit the list above so it includes all languages used in the document.
+                  
+          //Navigation 
+          #filter.level 
+            .level-left 
+              .level-item.field-label
+                label.label Filter:
+              .level-item.field-body
+                .field.is-narrow(style="max-width:175px;")
+                  span.select
+                    select#languages()
+                      option(selected value = "all") All Languages 
+                      each language in languages
+                        option(value = language)= codeToName(language) 
+                .field.is-narrow
+                  span.select
+                    select#handwritten 
+                      option(selected value = "all") Any Type 
+                      option(value = "true") Handwritten
+                      option(value = "false") Typed
+                .field.is-narrow(style = "max-width:175px;")
+                  span.select
+                    select#collection 
+                      option(selected value = "all") Any Collection  
+                      each collection in collections
+                        option(value = collection._id)= collection.name
+            .level-right
+              .level-item
+                a.button(onclick = "reset()") 
+                  span.icon 
+                    i.fas.fa-undo
+                  span Reset
+              .level-item
+                a.button(onclick = "location.reload()") 
+                  span.icon 
+                    i.fas.fa-fast-forward
+                  span Skip
+              .level-item
+                a.button.is-green(onclick = "submitTranscription('" + document._id + "')") Finish
+      else 
+        p.is-size-4.no-documents There are no more documents to transcribe. Try amending your filters or <a href = "/verify">verifying documents</a> instead.
 
     include includes/footer.pug
     

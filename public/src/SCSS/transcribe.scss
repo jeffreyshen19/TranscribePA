@@ -3,6 +3,13 @@
 @import "nav";
 @import "footer";
 
+.no-documents{
+  text-align: center;
+  top: calc(50vh - 175px + 49px);
+  position: relative;
+  padding: 0 20px;
+}
+
 #body{
   height: calc(100vh - 49px);
   padding-top: 25px;

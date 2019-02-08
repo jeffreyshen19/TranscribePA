@@ -28,9 +28,6 @@ router.get('/', async function(req, res){
     ]);
 
     const result = await Document.findOne(filter).skip(Math.floor(Math.random() * count)).exec();
-
-    if(result == null) res.render("404"); //TODO: make this an error page instead
-
     const collection = await Collection.findOne({"_id": result.collection_id});
 
     if(result) res.render("transcribe", {
@@ -43,7 +40,9 @@ router.get('/', async function(req, res){
     });
   }
   catch{
-    res.render("404");
+    res.render("transcribe", {
+      document: null
+    });
   }
 
 });
