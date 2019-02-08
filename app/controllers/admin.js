@@ -135,7 +135,8 @@ router.post("/new-collection", multer.fields([{
                 completed: false,
                 changelog: [],
                 img: path.relative(appRoot, slug + "/" + files[i]),
-                collection_id: collection._id
+                collection_id: collection._id,
+                title: path.relative(appRoot, req.file.path).split("/")[1].split(".")[0]
               });
 
               document.save(function(err) {
@@ -172,7 +173,8 @@ router.post("/new-document", multer.single("image"), function(req, res) {
       verified: false,
       completed: false,
       changelog: [],
-      img: path.relative(appRoot, req.file.path)
+      img: path.relative(appRoot, req.file.path),
+      title: path.relative(appRoot, req.file.path).split("/")[1].split(".")[0]
     });
 
     document.save(function(err) {
