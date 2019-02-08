@@ -8,6 +8,7 @@ var languageCodeToName = require('../helpers/languages');
 
 // Get a random document to transcribe based upon designated search parameters
 router.get('/', async function(req, res){
+
   var filter = {
     transcribed: false
   };
@@ -37,7 +38,8 @@ router.get('/', async function(req, res){
       languages: languages,
       codeToName: languageCodeToName,
       collections: collections,
-      collection: collection
+      collection: collection,
+      messages: req.flash('success-transcribe')
     });
   }
   catch{
@@ -64,7 +66,8 @@ router.post('/finish', function(req, res){ //TODO: add error handling
 
       document.save(function (err, updatedDocument) {
         if (err) return handleError(err);
-        res.redirect("/transcribe"); //TODO: add flash here
+        req.flash('success-transcribe', 'Document successfully transcribed and awaiting verification!');
+        res.sendStatus(200);
       });
     }
   });

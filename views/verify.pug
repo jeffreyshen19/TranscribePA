@@ -11,6 +11,14 @@ html
         include includes/nav.pug
 
       #body.container
+        if successMessage.length > 0
+          .notification.is-green 
+            button.delete(onclick = "$(this).parent().hide()") 
+            p= successMessage
+        else if errorMessage.length > 0
+          .notification.is-red 
+            button.delete(onclick = "$(this).parent().hide()") 
+            p= errorMessage
         p#lines(style = "display:none")= document.lines  
         #editor.columns
           .column.is-narrow

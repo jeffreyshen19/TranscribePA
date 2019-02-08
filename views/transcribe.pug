@@ -11,6 +11,10 @@ html
         include includes/nav.pug
 
       #body.container
+        if messages.length > 0
+          .notification.is-green 
+            button.delete(onclick = "$(this).parent().hide()") 
+            p= messages
         p#lines(style = "display:none")= document.lines  
         #editor.columns
           .column.is-narrow

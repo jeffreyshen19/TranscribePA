@@ -38,7 +38,9 @@ router.get('/', async function(req, res){
       languages: languages,
       codeToName: languageCodeToName,
       collections: collections,
-      collection: collection
+      collection: collection,
+      successMessage: req.flash('verify-success'),
+      errorMessage: req.flash('verify-error')
     });
   }
   catch{
@@ -60,7 +62,8 @@ router.post('/accept', function(req, res){ //TODO: add error handling
 
     document.save(function (err, updatedDocument) {
       if (err) return handleError(err);
-      res.redirect("/verify"); //TODO: add flash here
+      req.flash('verify-success', 'Document accepted, and waiting admin approval!');
+      res.sendStatus(200);
     });
   });
 });
@@ -78,7 +81,8 @@ router.post('/reject', function(req, res){ //TODO: add error handling
 
     document.save(function (err, updatedDocument) {
       if (err) return handleError(err);
-      res.redirect("/verify"); //TODO: add flash here
+      req.flash('verify-error', 'Document successfully rejected.');
+      res.sendStatus(200);
     });
   });
 });
