@@ -4,6 +4,7 @@ var mongoose = require("mongoose");
 var bodyParser = require('body-parser');
 var path = require('path');
 var passport = require("passport");
+require('./config/passport')(passport);
 var flash = require('connect-flash');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
@@ -24,6 +25,8 @@ app.use(session({
   resave: false,
   saveUninitialized: true
 }));
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(flash());
 
 // Configure views
@@ -40,7 +43,7 @@ app.use(function(req, res, next){ // Automatically pass config variables in loca
 global.appRoot = path.resolve(__dirname);
 
 // Configure Database
-mongoose.connect('mongodb://localhost/transcribe-pa');
+mongoose.connect('mongodb://localhost/transcribe-pa', { useNewUrlParser: true });
 
 // Load Routes
 app.use(require('./app/controllers'));
