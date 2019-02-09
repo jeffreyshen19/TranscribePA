@@ -84,7 +84,7 @@
 }
 
 #collections{
-  padding: 15px 40px;
+  padding: 15px 0;
 
   .column{
     width: 275px;
@@ -106,6 +106,32 @@
       margin-bottom: 2px;
       &:first-of-type{
         margin-right: 2px;
+      }
+    }
+  }
+
+  #create-collection{
+    text-align: center;
+
+    .img{
+      background: $blue;
+      position: relative;
+      width: 250px;
+      overflow: auto;
+    }
+
+    .text{
+      h3{
+        width: 250px;
+      }
+
+      position: relative;
+      text-align: center;
+      color: white;
+      top: calc(50% - 12px);
+      transform: translateY(-50%);
+      &:hover{
+        color: $white;
       }
     }
   }

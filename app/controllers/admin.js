@@ -102,7 +102,11 @@ router.get("/review", auth, function(req, res) {
 
 // Manage collections
 router.get("/collections", auth, function(req, res) {
-  res.render("admin/admin-collections");
+  Collection.find({}, function(err, collections) {
+    res.render("admin/admin-collections", {
+      collections: collections
+    });
+  });
 });
 
 // Create collection

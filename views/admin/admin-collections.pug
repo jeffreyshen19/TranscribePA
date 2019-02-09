@@ -1,3 +1,20 @@
 extends dashboard
 
 block body
+  h2(style = "margin-bottom: 5px") Manage Collections 
+  if collections.length == 0 
+    p You don't have any collections. <a href = "/admin/create">Create</a> one! 
+  else 
+    #collections.columns.is-multiline.is-mobile 
+      each collection in collections
+        .collection.column.is-narrow 
+          .img(style = "background-image:url('/" + collection.img + "')")
+          h3= collection.name 
+          br
+          a.button.is-blue(href = "/admin/collections/" + collection._id) Manage
+      #create-collection.colllection.column.is-narrow 
+        a(href = "/admin/create")
+          .img
+            .text 
+              h3 Create Collection
+  hr       

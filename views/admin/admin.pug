@@ -46,18 +46,7 @@ block body
           a(href = "/admin/review/" + document._id)
             img(src = "/uploads/" + document.img)
             p= document.name
-  //- #collections.columns.is-multiline.is-centered.is-mobile 
-  //-   each collection in collections
-  //-     .collection.column.is-narrow 
-  //-       .img(style = "background-image:url('/" + collection.img + "')")
-  //-       h3= collection.name 
-  //-       br
-  //-       a.button.is-blue(href = "/admin/collections/" + collection._id) Manage
-  //-   #create-collection.column.is-narrow
-  //-     .text
-  //-       i.fas.fa-plus
-  //-       h2 Create Collection
-        
+            
 block scripts 
   script(src = "/bower_components/d3/d3.min.js")
   script(src = "/bower_components/masonry-layout/dist/masonry.pkgd.min.js")
