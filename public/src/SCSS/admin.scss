@@ -60,6 +60,29 @@
   }
 }
 
+#browse{
+  margin: 0 auto;
+
+  .item{
+    margin-bottom: 20px;
+
+    img{
+      width: 250px;
+    }
+
+    p{
+      margin-top: 5px;
+    }
+  }
+
+  .level{
+    width: 100%;
+    padding-top: 15px;
+    margin-top: 10px;
+    border-top: 2px solid rgb(242,242,242);
+  }
+}
+
 #collections{
   padding: 15px 40px;
 

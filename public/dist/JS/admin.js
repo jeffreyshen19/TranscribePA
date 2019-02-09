@@ -1,5 +1,25 @@
 /*jshint esversion: 6*/
 
+/*
+  MASONRY
+*/
+
+$(window).on("load", function(){
+  $('#browse').masonry({
+    itemSelector: '.item',
+    columnWidth: 250,
+    gutter: 20,
+    horizontalOrder: true,
+    fitWidth: true,
+    transitionDuration: '0.2s'
+  });
+  $("#browse").css("visibility", "visible");
+});
+
+/*
+  PIE CHART
+*/
+
 var data = [
   {name: "Completed", value: $("#pie").data("completed"), color: "#188977", hover: "#0c7362"},
   {name: "Verified", value: $("#pie").data("verified"), color: "#39A96B", hover: "#299559"},

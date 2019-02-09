@@ -77,12 +77,18 @@ router.get("/", auth, function(req, res) {
           }
         }
       }
-    ], function(err, documents){
-      res.render("admin/admin", {
-        collections: collections,
-        documents: documents,
-        user: req.user,
-        messages: req.flash("login-message")
+    ], function(err, document_counts){
+      Document.find({
+        verified: true,
+        completed: false
+      }, function(err, documents){
+        res.render("admin/admin", {
+          collections: collections,
+          document_counts: document_counts,
+          documents: documents,
+          user: req.user,
+          messages: req.flash("login-message")
+        });
       });
     });
 
