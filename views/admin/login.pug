@@ -1,7 +1,28 @@
-if messages.length > 0
-  p= messages
+doctype html
+html
+  head
+    - var title = "Admin Login" 
+    include ../includes/head.pug
+    
+    link(href = "/dist/CSS/login.css" rel = "stylesheet" type = "text/css")
+  body
+    .columns.is-centered.is-vcentered
+      #login.column.is-6    
+        h1.is-serif Login
+        
+        if messages.length > 0
+          .notification.is-red 
+            button.delete(onclick = "$(this).parent().hide()") 
+            p= messages
 
-form(action = "/admin/login" method = "post")
-  input(type = "text" name = "username")
-  input(type = "password" name = "password")
-  button(type = "submit") Login
+        form(action = "/admin/login" method = "post")
+          input.input(type = "text" name = "username" placeholder = "Username")
+          input.input(type = "password" name = "password" placeholder = "Password")
+          br
+          br
+          button.button.is-blue(type = "submit") Login
+    
+    script(src = "/bower_components/jquery/dist/jquery.min.js")
+
+
+    
