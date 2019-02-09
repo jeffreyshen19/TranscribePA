@@ -81,7 +81,8 @@ router.get("/", auth, function(req, res) {
       res.render("admin/admin", {
         collections: collections,
         documents: documents,
-        user: req.user
+        user: req.user,
+        messages: req.flash("login-message")
       });
     });
 

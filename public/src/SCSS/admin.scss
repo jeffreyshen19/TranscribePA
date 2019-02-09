@@ -6,6 +6,32 @@
   padding: 25px 40px;
 }
 
+#info{
+  .column{
+    text-align: center;
+    box-sizing: border-box;
+    height: 300px;
+    background: $blue;
+    margin: 0 6px 12px;
+    h2{
+      color: white;
+      margin-bottom: 14px;
+    }
+
+    h1{
+      font-size: 4rem;
+      margin-bottom: 15px;
+      color: white;
+    }
+
+    .text{
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+}
+
 #collections{
   padding: 15px 40px;
 
