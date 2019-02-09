@@ -13,8 +13,11 @@ block body
         a.button(href = "/admin/collections") Manage 
     .column.is-4.info-box 
       .text
-        h1 36
-        h2 Items Need Review
+        h1= documents[0].param_counts.completed
+        if documents[0].param_counts.completed == 1
+          h2 Item Needs Review 
+        else 
+          h2 Items Need Review 
         a.button(href = "/admin/review") Review 
     .column.is-4.info-box 
       .text

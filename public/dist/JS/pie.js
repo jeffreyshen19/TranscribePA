@@ -1,10 +1,10 @@
 /*jshint esversion: 6*/
 
 var data = [
-  {name: "Completed", value: $("#pie").data("completed"), color: "#188977", hover: "#f4f4f4"},
-  {name: "Verified", value: $("#pie").data("verified"), color: "#39A96B", hover: "#f4f4f4"},
-  {name: "Transcribed", value: $("#pie").data("transcribed"), color: "#BFE1B0", hover: "#f4f4f4"},
-  {name: "Raw", value: $("#pie").data("raw"), color: "#f4f4f4", hover: "#f4f4f4"},
+  {name: "Completed", value: $("#pie").data("completed"), color: "#188977", hover: "#0c7362"},
+  {name: "Verified", value: $("#pie").data("verified"), color: "#39A96B", hover: "#299559"},
+  {name: "Transcribed", value: $("#pie").data("transcribed"), color: "#BFE1B0", hover: "#a7c998"},
+  {name: "Raw", value: $("#pie").data("raw"), color: "#f4f4f4", hover: "#ebebeb"},
 ];
 var text = "";
 
