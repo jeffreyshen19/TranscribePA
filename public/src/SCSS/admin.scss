@@ -2,29 +2,8 @@
 @import "theme";
 @import "nav";
 
-nav{
-  background-color: $black;
-
-  a{
-    color: white;
-    &:hover{
-      color: $white;
-    }
-  }
-}
-
-#ui{
-  margin-top: 0px;
-
-  #sidebar{
-    background-color: #e4e9ed;
-    padding: 20px 30px;
-  }
-
-  #body{
-    padding: 20px 30px;
-    box-sizing: border-box;
-  }
+#body{
+  padding: 25px 40px;
 }
 
 #collections{

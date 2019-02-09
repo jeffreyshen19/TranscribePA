@@ -1,25 +1,29 @@
 doctype html
 html
   head
-    - var title = "Dashboard"
+    - var title = "Admin Dashboard"
     include ../includes/head.pug
     
     link(href = "/dist/css/admin.css" rel = "stylesheet" type = "text/css")
   body
-    include ../includes/nav.pug
-    
-    #ui.columns 
-      #sidebar.column.is-narrow 
-        a(href = "/admin") Home
-        br
-        a(href = "/admin/review") Review Documents 
-        br
-        a(href = "/admin/collections") Manage Collections  
-        br
-        a(href = "/admin/create") Create Collections 
-      #body.column
-        block body
+    .inverted
+      nav.level
+        .level-left
+          p.level-item
+            a.is-serif(href = "/admin")= config.title
+              | &nbsp;| <span>Admin</span>
+        .level-right 
+          p.level-item
+            a(href = "/admin/review") Review Documents 
+          p.level-item
+            a(href = "/admin/collections") Manage Collections
+          p.level-item
+            a(href = "/admin/settings") Settings
+          p.level-item
+            a(href = "/admin/logout") Logout
+
+    #body
+      block body
     
     script(src = "/bower_components/jquery/dist/jquery.min.js")
-      
     block scripts 
