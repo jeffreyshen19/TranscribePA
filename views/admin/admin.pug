@@ -2,6 +2,7 @@ extends dashboard
 
 block body
   h1 Dashboard 
+  p=user
   #info.columns
     .column.is-narrow.info-box 
       h2 #{collections.length} Collection 
@@ -15,11 +16,12 @@ block body
   hr 
   #collections.columns.is-multiline.is-centered.is-mobile 
     each collection in collections
-      .column.is-narrow 
-        a(href = "/browse?collection=" + collection._id + "&completed=all")
-          .img(style = "background-image:url('/" + collection.img + "')")
-          h1= collection.name
-          p= collection.description  
+      .collection.column.is-narrow 
+        .img(style = "background-image:url('/" + collection.img + "')")
+        h3= collection.name 
+        br
+        a.button.is-blue(href = "/browse?collection=" + collection._id + "&completed=all") Browse
+        a.button(href = "/browse/collections/" + collection._id) About
     #create-collection.column.is-narrow
       .text
         i.fas.fa-plus

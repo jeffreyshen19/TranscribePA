@@ -37,6 +37,7 @@ rl.question("Please enter a username (i.e. librarian1010): ", function(username)
         else{
           var newAdmin = new Admin();
           newAdmin.username = username;
+          newAdmin.name = name;
           newAdmin.password = newAdmin.generateHash(password);
 
           newAdmin.save(function(err){
