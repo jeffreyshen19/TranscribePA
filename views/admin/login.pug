@@ -1,0 +1,7 @@
+if messages.length > 0
+  p= messages
+
+form(action = "/admin/login" method = "post")
+  input(type = "text" name = "username")
+  input(type = "password" name = "password")
+  button(type = "submit") Login

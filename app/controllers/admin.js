@@ -4,6 +4,7 @@ var fs = require("fs");
 var path = require("path");
 var unzipper = require("unzipper");
 var slugify = require("slugify");
+var passport = require("passport");
 
 var Document = require("../models/Document"),
   Collection = require("../models/Collection");
@@ -11,8 +12,34 @@ var auth = require("../middleware/auth");
 var multer = require("../middleware/multer");
 var ocr = require("../helpers/ocr.js");
 
+/*
+  Admin authentication
+*/
+
+// Login
+router.get("/login", function(req, res) {
+  if(req.isAuthenticated()) res.redirect("/admin");
+  else res.render("admin/login", {messages: req.flash("login-message")});
+});
+
+router.post('/login', passport.authenticate('local-login', {
+  successRedirect : '/admin',
+  failureRedirect : '/admin/login',
+  failureFlash : true
+}));
+
+// Logout
+router.get('/logout', function(req, res) {
+  req.logout();
+  res.redirect('/');
+});
+
+/*
+  Admin routes
+*/
+
 // Admin Dashboard
-router.get("/", function(req, res) {
+router.get("/", auth, function(req, res) {
   Collection.find({}, function(err, collections) {
     Document.aggregate([{
         "$group": {
@@ -51,9 +78,10 @@ router.get("/", function(req, res) {
         }
       }
     ], function(err, documents){
-      res.render("admin", {
+      res.render("admin/admin", {
         collections: collections,
-        documents: documents
+        documents: documents,
+        user: req.user
       });
     });
 
@@ -61,18 +89,18 @@ router.get("/", function(req, res) {
 });
 
 // Review documents
-router.get("/review", function(req, res) {
-  res.render("admin-review");
+router.get("/review", auth, function(req, res) {
+  res.render("admin/admin-review");
 });
 
 // Manage collections
-router.get("/collections", function(req, res) {
-  res.render("admin-collections");
+router.get("/collections", auth, function(req, res) {
+  res.render("admin/admin-collections");
 });
 
 // Create collection
-router.get("/create", function(req, res) {
-  res.render("admin-create");
+router.get("/create", auth, function(req, res) {
+  res.render("admin/admin-create");
 });
 
 
