@@ -1,10 +1,10 @@
 /*jshint esversion: 6*/
 
 var data = [
-  {name: "Completed", value: $("#pie").data("completed"), color: "#1f3a93"},
-  {name: "Verified", value: $("#pie").data("verified"), color: "#446cb3"},
-  {name: "Transcribed", value: $("#pie").data("transcribed"), color: "#89c4f4"},
-  {name: "Raw", value: $("#pie").data("raw"), color: "#e4f1fe"},
+  {name: "Completed", value: $("#pie").data("completed"), color: "#188977", hover: "#f4f4f4"},
+  {name: "Verified", value: $("#pie").data("verified"), color: "#39A96B", hover: "#f4f4f4"},
+  {name: "Transcribed", value: $("#pie").data("transcribed"), color: "#BFE1B0", hover: "#f4f4f4"},
+  {name: "Raw", value: $("#pie").data("raw"), color: "#f4f4f4", hover: "#f4f4f4"},
 ];
 var text = "";
 
@@ -39,21 +39,21 @@ var path = g.selectAll('path')
   .on("mouseover", function(d) {
       let g = d3.select(this)
         .style("cursor", "pointer")
-        .style("fill", "black")
+        .style("fill", "white")
         .append("g")
         .attr("class", "text-group");
-
-      g.append("text")
-        .attr("class", "name-text")
-        .text(`${d.data.name}`)
-        .attr('text-anchor', 'middle')
-        .attr('dy', '-1.2em');
 
       g.append("text")
         .attr("class", "value-text")
         .text(`${d.data.value}`)
         .attr('text-anchor', 'middle')
-        .attr('dy', '.6em');
+        .attr('dy', '0em');
+
+      g.append("text")
+        .attr("class", "name-text")
+        .text(`${d.data.name}`)
+        .attr('text-anchor', 'middle')
+        .attr('dy', '1.5em');
     })
   .on("mouseout", function(d) {
       d3.select(this)
@@ -67,7 +67,7 @@ var path = g.selectAll('path')
   .on("mouseover", function(d) {
       d3.select(this)
         .style("cursor", "pointer")
-        .style("fill", "black");
+        .style("fill", d.data.hover);
     })
   .on("mouseout", function(d) {
       d3.select(this)

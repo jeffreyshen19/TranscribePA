@@ -19,6 +19,21 @@ block body
     .column.is-4.info-box 
       .text
         #pie(data-completed = documents[0].param_counts.completed data-raw = documents[0].param_counts.raw data-transcribed = documents[0].param_counts.transcribed data-verified = documents[0].param_counts.verified)
+        br
+        .legend 
+          p
+            span.bubble(style = "background-color: #f4f4f4")
+            | Raw
+          p
+            span.bubble(style = "background-color: #BFE1B0")
+            | Transcribed
+          br
+          p
+            span.bubble(style = "background-color: #39A96B")
+            | Verified
+          p
+            span.bubble(style = "background-color: #188977")
+            | Completed
   hr 
   #collections.columns.is-multiline.is-centered.is-mobile 
     each collection in collections
