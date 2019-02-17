@@ -11,6 +11,11 @@ Upload your institution's documents as collections. Once configuring a few setti
 
 ## Features
 
+* **Built in Search**: Once your users have finished transcribing documents, they should be searchable as well! 
+  * Browse page to view all documents
+  * Full-text search
+  * Option to download data as JSON
+* **Stylish by default**: The website looks modern and professional. If you want to change the styles, however, that is also easy to do.
 * **Incredibly simple installation**: 
 
   ```
@@ -19,6 +24,7 @@ Upload your institution's documents as collections. Once configuring a few setti
   npm run setup
   ```
 * **Easily configurable**: Customize TranscribePA for your own institution, using just one config file.
+* **Completely open-source and free**
 
 ## Documentation 
 
