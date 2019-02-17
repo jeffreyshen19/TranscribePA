@@ -29,3 +29,16 @@ $("select#collection").change(function(){
 $("select#languages").change(function(){
   updateURLParameter(window.location.href, "languages", $(this).children("option:selected").val());
 });
+
+// Resize divider
+$(document).ready(function(){
+  $("#img").css("max-width", $("#img").width());
+  $("#img").resizable({
+    handleSelector: "#splitter",
+    resizeHeight: false,
+  });
+});
+
+$(document).resize(function(){
+  $("#img").css("max-width", $("#img").width());
+});

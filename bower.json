@@ -20,6 +20,7 @@
     "jquery": "^3.3.1",
     "masonry-layout": "masonry#^4.2.2",
     "d3": "^5.8.0",
-    "typed.js": "^2.0.10"
+    "typed.js": "^2.0.10",
+    "jquery-resizable": "^0.20.0"
   }
 }

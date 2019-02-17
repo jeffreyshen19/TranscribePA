@@ -20,13 +20,14 @@ html
             .notification.is-red 
               button.delete(onclick = "$(this).parent().hide()") 
               p= errorMessage
-              
-          p#lines(style = "display:none")= document.lines  
-          #editor.columns
-            .column.is-narrow
+
+          #editor.columns.is-gapless
+            .column.is-narrow#img
               img(src = "/uploads/" + document.img)
+            .column.is-narrow#splitter
+              i.fas.fa-arrows-alt-h
             .column#text-editor
-              textarea.is-size-6(readonly)#text!= document.lines
+              .is-size-6#text!= document.lines.replace(/\n/g, "<br>")
               .field.languages
                 .field 
                   label.label Languages: 
@@ -68,5 +69,6 @@ html
     include includes/footer.pug
     
     script(src = "/bower_components/jquery/dist/jquery.min.js")
+    script(src = "/bower_components/jquery-resizable/dist/jquery-resizable.min.js")
     script(src = "/dist/JS/urlcontrol-min.js")
     script(src = "/dist/JS/verify-min.js")
