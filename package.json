@@ -8,7 +8,9 @@
   },
   "scripts": {
     "test": "mocha",
-    "admin": "node app/scripts/create-admin.js"
+    "admin": "node app/scripts/create-admin.js",
+    "bower": "bower",
+    "setup": "npm install && npm run bower install"
   },
   "repository": {
     "type": "git",
@@ -22,6 +24,7 @@
   "homepage": "https://github.com/jeffreyshen19/Digital-Transcription#readme",
   "devDependencies": {
     "assert": "^1.4.1",
+    "bower": "^1.8.8",
     "chai": "^4.2.0",
     "gulp": "^4.0.0",
     "gulp-minify": "^3.1.0",
