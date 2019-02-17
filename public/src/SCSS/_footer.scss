@@ -18,6 +18,8 @@ footer{
     }
 
     .right{
+      text-align: right;
+
       .links, .icons{
         a{
           color: $black;
@@ -41,6 +43,23 @@ footer{
           margin-left: 6px;
         }
       }
+    }
+  }
+}
+
+@media screen and (max-width: 768px){
+  footer{
+    text-align: center;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    .columns .right{
+      text-align: center;
+    }
+    .column{
+      padding: 0;
+    }
+    .left{
+      margin-bottom: 10px;
     }
   }
 }
