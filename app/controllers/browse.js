@@ -26,7 +26,7 @@ router.get('/', paginate.middleware(50, 100), async (req, res) => {
   try{
     const [ results, itemCount, languages ] = await Promise.all([
         Document.find(filter).limit(req.query.limit).skip(req.skip).lean().exec(),
-        Document.count(filter),
+        Document.countDocuments(filter),
         Document.find(filter).distinct('languages')
       ]);
 

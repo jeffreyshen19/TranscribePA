@@ -43,7 +43,7 @@ app.use(function(req, res, next){ // Automatically pass config variables in loca
 global.appRoot = path.resolve(__dirname);
 
 // Configure Database
-mongoose.connect('mongodb://localhost/transcribe-pa', { useNewUrlParser: true });
+mongoose.connect('mongodb://localhost/transcribe-pa', { useNewUrlParser: true, useCreateIndex: true});
 
 // Load Routes
 app.use(require('./app/controllers'));

@@ -22,7 +22,7 @@ router.get('/', async function(req, res){
 
   try{
     const [ count, languages, collections] = await Promise.all([
-      Document.count(filter),
+      Document.countDocuments(filter),
       Document.find(filter).distinct('languages'),
       Collection.find()
     ]);
