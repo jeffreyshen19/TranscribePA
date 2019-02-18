@@ -32,13 +32,9 @@ $("select#languages").change(function(){
 
 // Resize divider
 $(document).ready(function(){
-  $("#img").css("max-width", $("#img").width());
+  $("#img").css("max-width", Math.min($("#img").width(), $("#editor").width() / 2));
   $("#img").resizable({
     handleSelector: "#splitter",
     resizeHeight: false,
   });
-});
-
-$(document).resize(function(){
-  $("#img").css("max-width", $("#img").width());
 });

@@ -37,3 +37,9 @@ $("#search-form").submit(function(e){
   updateURLParameter(window.location.href, "query", encodeURIComponent($("#search").val()));
   e.preventDefault();
 });
+
+$(window).resize(function(){
+  setTimeout(function(){
+    $("#browse .level").css("width", $("#browse").width());
+  }, 400);
+});

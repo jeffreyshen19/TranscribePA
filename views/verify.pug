@@ -21,7 +21,7 @@ html
               button.delete(onclick = "$(this).parent().hide()") 
               p= errorMessage
 
-          #editor.columns.is-gapless
+          #editor.columns.is-gapless.is-mobile
             .column.is-narrow#img
               img(src = "/uploads/" + document.img)
             .column.is-narrow#splitter
@@ -34,7 +34,7 @@ html
                   input.input#language-editor(type = "text" value = document.languages.join(", ") readonly)
                     
           //Navigation 
-          #filter.level 
+          #filter.level.is-mobile 
             .level-left 
               .level-item.field-label
                 label.label Filter:
@@ -45,12 +45,14 @@ html
                       option(selected value = "all") All Languages 
                       each language in languages
                         option(value = language)= codeToName(language) 
+              .level-item.field-body
                 .field.is-narrow
                   span.select
                     select#handwritten 
                       option(selected value = "all") Any Type 
                       option(value = "true") Handwritten
                       option(value = "false") Typed
+              .level-item.field-body
                 .field.is-narrow(style = "max-width:175px;")
                   span.select
                     select#collection 
