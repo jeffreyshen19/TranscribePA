@@ -1,6 +1,7 @@
 var colors = require('colors');
 var readline = require('readline');
 var mongoose = require("mongoose");
+var config = require("./config.json");
 var Admin = require("../models/Admin");
 
 var Writable = require('stream').Writable;
@@ -20,7 +21,7 @@ var rl = readline.createInterface({
   terminal: true
 });
 
-mongoose.connect('mongodb://localhost/transcribe-pa', {useNewUrlParser: true, useCreateIndex: true });
+mongoose.connect(config.db_url, {useNewUrlParser: true, useCreateIndex: true });
 console.log("Welcome to the admin creation console!".bold.green);
 
 rl.question("Please enter a username (i.e. librarian1010): ", function(username){
