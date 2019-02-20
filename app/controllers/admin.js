@@ -46,33 +46,70 @@ router.get("/settings", auth, function(req, res){
 });
 
 // Delete admin
-router.post("/delete/:id", auth, function(req, res){
+router.get("/settings/delete/:id", auth, function(req, res){
   req.flash('success-transcribe', 'Document successfully transcribed and awaiting verification!');
 
   if(req.user._id == req.params.id) {
-    req.flash("admin-settings", "Can't delete the account you are currently logged in on!");
-    res.sendStatus(200);
+    req.flash("admin-settings", {
+      message: "Can't delete the account you are currently logged in on!",
+      error: true
+    });
+    res.redirect("/admin/settings");
   }
   else Admin.deleteOne({ _id: req.params.id }, function (err) {
-    if (err) req.flash("admin-settings", "Error deleting admin.");
-    else req.flash("admin-settings", "Successfully deleted admin.");
+    if (err) req.flash("admin-settings", {
+      message: "Error deleting admin.",
+      error: true
+    });
+    else req.flash("admin-settings", {
+      message: "Successfully deleted admin.",
+      error: false
+    });
 
-    res.sendStatus(200);
+    res.redirect("/admin/settings");
   });
 });
 
 // Create admin
-router.post("/create", auth, function(req, res){
-  var newAdmin = new Admin();
-  newAdmin.username = req.body.username;
-  newAdmin.name = req.body.name;
-  newAdmin.password = newAdmin.generateHash(req.bodypassword);
-
-  newAdmin.save(function(err){
-    if(err) req.flash("admin-settings", "Error creating admin.");
-    else req.flash("admin-settings", "Successfully created a new user (" + newAdmin.name + ")");
+router.post("/settings/create", auth, function(req, res){
+  if(!(req.body.username && req.body.name && req.body.password)){
+    req.flash("admin-settings", {
+      message: "Please fill out all fields",
+      error: true
+    });
 
     res.redirect("/admin/settings");
+    return;
+  }
+
+  Admin.findOne({'username': req.body.username}, function(err, user) {
+    if(user) {
+      req.flash("admin-settings", {
+        message: "That username is already taken",
+        error: true
+      });
+
+      res.redirect("/admin/settings");
+    }
+    else{
+      var newAdmin = new Admin();
+      newAdmin.username = req.body.username;
+      newAdmin.name = req.body.name;
+      newAdmin.password = newAdmin.generateHash(req.body.password);
+
+      newAdmin.save(function(err){
+        if(err) req.flash("admin-settings", {
+          message: "Error creating admin.",
+          error: true
+        });
+        else req.flash("admin-settings", {
+          message: "Successfully created a new user (" + newAdmin.name + ")",
+          error: false
+        });
+
+        res.redirect("/admin/settings");
+      });
+    }
   });
 });
 

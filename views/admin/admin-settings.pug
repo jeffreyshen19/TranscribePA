@@ -1,9 +1,31 @@
 extends dashboard
 
 block body
+  if messages.length > 0
+    .notification(class = messages[0].error ? "is-red" : "is-green")
+      button.delete(onclick = "$(this).parent().hide()") 
+      p= messages[0].message
+  h2 Settings   
+  br
+  p Manage admin accounts: 
+  br
   ul
     each admin in admins 
-      li= admin
+      li
+        a(title = "Delete Admin" onclick = 'if(confirm("Are you sure you want to delete ' + admin.username + '?")) window.location.href = "/admin/settings/delete/' + admin._id + '"')
+          i.fas.fa-times
+        | &nbsp;  #{admin.name} (#{admin.username})
+  hr  
+  p Create admin accounts: 
+  br
+  form(action = "/admin/settings/create" method = "post")
+    input.input(type = "text" name = "username" placeholder = "Username")
+    input.input(type = "text" name = "name" placeholder = "Full Name")
+    input.input(type = "password" name = "password" placeholder = "Password")
+    br
+    br
+    button.button.is-blue(type = "submit") Create account
+
             
 block scripts 
   script(src = "/dist/JS/admin-settings-min.js")
