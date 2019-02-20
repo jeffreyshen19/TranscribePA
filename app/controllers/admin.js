@@ -198,7 +198,7 @@ router.get("/create", auth, function(req, res) {
   res.render("admin/admin-create");
 });
 
-router.post("/new-collection", multer.fields([{ //TODO: check that name exists
+router.post("/new-collection", auth, multer.fields([{ //TODO: check that name exists
   name: 'zip',
   maxCount: 1
 }, {
@@ -277,7 +277,7 @@ router.post("/new-collection", multer.fields([{ //TODO: check that name exists
 });
 
 // Add a document to an existing collection
-router.post("/new-document", multer.single("image"), function(req, res) {
+router.post("/new-document", auth, multer.single("image"), function(req, res) {
   ocr(req.file.path, {}, function(data) {
 
     if (data === "ERROR") res.send(data);
