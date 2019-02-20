@@ -174,11 +174,6 @@ router.get("/", auth, function(req, res) {
   });
 });
 
-// Review documents
-router.get("/review", auth, function(req, res) {
-  res.render("admin/admin-review");
-});
-
 // Manage collections
 router.get("/collections", auth, function(req, res) {
   Collection.find({}, function(err, collections) {
@@ -189,9 +184,82 @@ router.get("/collections", auth, function(req, res) {
 });
 
 /*
-  MANAGE COLLECTIONS
+  REVIEW DOCUMENTS
 */
 
+router.get("/review", auth, function(req, res) {
+  res.render("admin/admin-review");
+});
+
+// Mark as complete
+router.get("/review/accept", auth, function(req, res){
+  Document.findOne({
+    "_id": req.body.id
+  }, function (err, document) {
+    document.changelog.push({
+      "timestamp": Date.now(),
+      "prevVersion": document.lines,
+      "action": "COMPLETE"
+    });
+
+    document.lines = req.body.transcription;
+    document.raw = req.body.transcription.replace(/\n/g, ' ').replace(/ - /g, "");
+    document.languages = req.body.languages;
+    document.completed = true;
+
+    document.save(function (err, updatedDocument) {
+      if (err) return handleError(err);
+      req.flash('review-success', 'Document accepted and officially marked as complete');
+      res.sendStatus(200);
+    });
+  });
+});
+
+// Save work on review
+router.get("/review/save", auth, function(req, res){
+  Document.findOne({
+    "_id": req.body.id
+  }, function (err, document) {
+    document.changelog.push({
+      "timestamp": Date.now(),
+      "prevVersion": document.lines,
+      "action": "REVIEW_SAVE"
+    });
+
+    document.lines = req.body.transcription;
+    document.raw = req.body.transcription.replace(/\n/g, ' ').replace(/ - /g, "");
+    document.languages = req.body.languages;
+
+    document.save(function (err, updatedDocument) {
+      if (err) return handleError(err);
+      req.flash('review-success', 'Document saved but not marked as complete');
+      res.sendStatus(200);
+    });
+  });
+});
+
+// Reject document, sending it back to verification stage
+router.get("/review/reject", auth, function(req, res){
+  Document.findOne({
+    "_id": req.body.id
+  }, function (err, document) {
+    document.verified = false;
+    document.changelog.push({
+      "timestamp": Date.now(),
+      "action": "REJECT_COMPLETE"
+    });
+
+    document.save(function (err, updatedDocument) {
+      if (err) return handleError(err);
+      req.flash('review-error', 'Document successfully marked as incomplete');
+      res.sendStatus(200);
+    });
+  });
+});
+
+/*
+  MANAGE COLLECTIONS
+*/
 
 // Create Collection
 router.get("/create", auth, function(req, res) {
