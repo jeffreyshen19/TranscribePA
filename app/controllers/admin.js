@@ -188,14 +188,17 @@ router.get("/collections", auth, function(req, res) {
   });
 });
 
-// Create collection
+/*
+  MANAGE COLLECTIONS
+*/
+
+
+// Create Collection
 router.get("/create", auth, function(req, res) {
   res.render("admin/admin-create");
 });
 
-
-// Create Collection and add its documents
-router.post("/new-collection", multer.fields([{
+router.post("/new-collection", multer.fields([{ //TODO: check that name exists
   name: 'zip',
   maxCount: 1
 }, {

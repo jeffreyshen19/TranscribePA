@@ -1,17 +1,35 @@
 extends dashboard
 
 block body
-  form(action = "/admin/new-document" method = "post" enctype = "multipart/form-data")
-    input(type = "file" name = "image")
-    input(type = "submit" value = "SUBMIT")
-      
+  h2 Create Collection 
+  br
+  p Collections are groups of documents with a unified theme. Not all documents need to be uploaded in collections, but doing so improves the browsing experience of your users. There is no way to bulk upload without creating collections.
+  br
   form(action = "/admin/new-collection" method = "post" enctype = "multipart/form-data")
-    input(type = "text" name = "name")
+    input.input(type = "text" name = "name" placeholder = "Collection Name")
     br
-    input(type = "text" name = "description")
+    input.input(type = "text" name = "description" placeholder = "Collection Description")
     br
-    input(type = "file" name = "zip")
     br
-    input(type = "file" name = "img")
-    br
-    input(type = "submit" value = "SUBMIT")
+    .field
+      .file 
+        label.file-label
+          input.file-input(type="file" name = "zip" accept = ".zip")
+          span.file-cta 
+            span.file-icon
+              i.fas.fa-upload 
+            span.file-label Upload the collection as a ZIP...
+      p.help Compress a folder of images you want in a collection into a ZIP. Please include only .jpg and .png files 
+    .field
+      .file 
+        label.file-label
+          input.file-input(type="file" name = "img" accept = ".jpg,.jpeg,.png")
+          span.file-cta 
+            span.file-icon
+              i.fas.fa-upload 
+            span.file-label Upload a cover photo...
+      p.help Choose a cover photo which will be used to display your collection. Please upload only .jp(e)g or .png files
+    br  
+    button.button.is-blue(type = "submit") Create Collection
+  br
+  p Confused? See <a href = "https://github.com/jeffreyshen19/TranscribePA/blob/master/docs/admin.md" target = "_blank">this tutorial</a> on creating collections.
