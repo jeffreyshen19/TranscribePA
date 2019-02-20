@@ -1,0 +1,9 @@
+extends dashboard
+
+block body
+  ul
+    each admin in admins 
+      li= admin
+            
+block scripts 
+  script(src = "/dist/JS/admin-settings-min.js")

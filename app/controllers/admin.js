@@ -7,7 +7,8 @@ var slugify = require("slugify");
 var passport = require("passport");
 
 var Document = require("../models/Document"),
-  Collection = require("../models/Collection");
+  Collection = require("../models/Collection"),
+  Admin = require("../models/Admin");
 var auth = require("../middleware/auth");
 var multer = require("../middleware/multer");
 var ocr = require("../helpers/ocr.js");
@@ -32,6 +33,47 @@ router.post('/login', passport.authenticate('local-login', {
 router.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/');
+});
+
+// Manage admin accounts
+router.get("/settings", auth, function(req, res){
+  Admin.find({}, function(err, admins){
+    res.render("admin/admin-settings", {
+      "admins": admins,
+      "messages": req.flash("admin-settings")
+    });
+  });
+});
+
+// Delete admin
+router.post("/delete/:id", auth, function(req, res){
+  req.flash('success-transcribe', 'Document successfully transcribed and awaiting verification!');
+
+  if(req.user._id == req.params.id) {
+    req.flash("admin-settings", "Can't delete the account you are currently logged in on!");
+    res.sendStatus(200);
+  }
+  else Admin.deleteOne({ _id: req.params.id }, function (err) {
+    if (err) req.flash("admin-settings", "Error deleting admin.");
+    else req.flash("admin-settings", "Successfully deleted admin.");
+
+    res.sendStatus(200);
+  });
+});
+
+// Create admin
+router.post("/create", auth, function(req, res){
+  var newAdmin = new Admin();
+  newAdmin.username = req.body.username;
+  newAdmin.name = req.body.name;
+  newAdmin.password = newAdmin.generateHash(req.bodypassword);
+
+  newAdmin.save(function(err){
+    if(err) req.flash("admin-settings", "Error creating admin.");
+    else req.flash("admin-settings", "Successfully created a new user (" + newAdmin.name + ")");
+
+    res.redirect("/admin/settings");
+  });
 });
 
 /*
