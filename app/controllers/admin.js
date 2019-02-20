@@ -187,12 +187,67 @@ router.get("/collections", auth, function(req, res) {
   REVIEW DOCUMENTS
 */
 
+router.get("/review/:id", auth, function(req, res) {
+  Document.findOne({
+    _id: req.params.id
+  }, function(err, document){
+    if(err) res.redirect("/404");
+    else if(!document) res.render("admin/admin-review", {
+      "document": null
+    });
+    else res.render("admin/admin-review", {
+      "document": document,
+      "messages": req.flash("review-message")
+    });
+  });
+});
+
 router.get("/review", auth, function(req, res) {
   res.render("admin/admin-review");
 });
+/*
+router.get('/', async function(req, res){
 
+  var filter = {
+    transcribed: false
+  };
+
+  if(req.query.handwritten == "true") filter.handwritten = true;
+  else if(req.query.handwritten == "false") filter.handwritten = false;
+
+  if(req.query.languages && req.query.languages != "all") filter.languages = {"$all": [req.query.languages]};
+
+  if(req.query.collection) filter.collection_id = req.query.collection;
+
+  try{
+    const [ count, languages, collections] = await Promise.all([
+      Document.countDocuments(filter),
+      Document.find(filter).distinct('languages'),
+      Collection.find()
+    ]);
+
+    const result = await Document.findOne(filter).skip(Math.floor(Math.random() * count)).exec();
+    const collection = await Collection.findOne({"_id": result.collection_id});
+
+    if(result) res.render("transcribe", {
+      document: result,
+      languages: languages,
+      codeToName: languageCodeToName,
+      collections: collections,
+      collection: collection,
+      messages: req.flash('success-transcribe')
+    });
+  }
+  catch{
+    res.render("transcribe", {
+      document: null
+    });
+  }
+
+});
+*/
 // Mark as complete
-router.get("/review/accept", auth, function(req, res){
+router.post("/review/accept", auth, function(req, res){
   Document.findOne({
     "_id": req.body.id
   }, function (err, document) {
@@ -209,14 +264,17 @@ router.get("/review/accept", auth, function(req, res){
 
     document.save(function (err, updatedDocument) {
       if (err) return handleError(err);
-      req.flash('review-success', 'Document accepted and officially marked as complete');
+      req.flash('review-message', {
+        "message": 'Document accepted and officially marked as complete',
+        "error": false
+      });
       res.sendStatus(200);
     });
   });
 });
 
 // Save work on review
-router.get("/review/save", auth, function(req, res){
+router.post("/review/save", auth, function(req, res){
   Document.findOne({
     "_id": req.body.id
   }, function (err, document) {
@@ -232,14 +290,13 @@ router.get("/review/save", auth, function(req, res){
 
     document.save(function (err, updatedDocument) {
       if (err) return handleError(err);
-      req.flash('review-success', 'Document saved but not marked as complete');
       res.sendStatus(200);
     });
   });
 });
 
 // Reject document, sending it back to verification stage
-router.get("/review/reject", auth, function(req, res){
+router.post("/review/reject", auth, function(req, res){
   Document.findOne({
     "_id": req.body.id
   }, function (err, document) {
@@ -251,7 +308,10 @@ router.get("/review/reject", auth, function(req, res){
 
     document.save(function (err, updatedDocument) {
       if (err) return handleError(err);
-      req.flash('review-error', 'Document successfully marked as incomplete');
+      req.flash('review-message', {
+        "message": 'Document successfully marked as incomplete',
+        "error": true
+      });
       res.sendStatus(200);
     });
   });

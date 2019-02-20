@@ -1,3 +1,47 @@
 extends dashboard
 
+block styles
+  link(href = "/dist/css/admin-review.css" rel = "stylesheet" type = "text/css")
+
 block body
+  if document
+    #body.container
+      if messages.length > 0
+        .notification(class = messages[0].error ? "is-red" : "is-green")
+          button.delete(onclick = "$(this).parent().hide()") 
+          p= messages[0].message
+          
+      p#lines(style = "display:none")= document.lines  
+      #editor.columns.is-gapless.is-mobile
+        .column.is-narrow#img
+          img(src = "/uploads/" + document.img)
+        .column.is-narrow#splitter
+          i.fas.fa-arrows-alt-h
+        .column#text-editor
+          //- p#text(contenteditable = "true")!= document.lines.replace(/\n/g, "<br>")    
+          textarea.is-size-6#text!= document.lines 
+          .field.languages
+            .field 
+              label.label Languages: 
+              input.input#language-editor(type = "text" value = document.languages.join(", "))
+              p.help Edit the list above so it includes all languages used in the document.
+              
+      //Navigation 
+      #filter.level.is-mobile 
+        .level-left 
+          .level-item
+        .level-right
+          .level-item
+            a.button(onclick = "saveTranscription('" + document._id + "')") Save
+          .level-item
+            a.button.is-red(onclick = "rejectTranscription('" + document._id + "')") Reject
+          .level-item
+            a.button.is-green(onclick = "submitTranscription('" + document._id + "')") Accept
+  else 
+    p.is-size-4.no-documents There are no more documents to review. Return to the <a href = "/admin">dashboard</a>.
+
+    
+block scripts 
+  script(src = "/bower_components/jquery-resizable/dist/jquery-resizable.min.js")
+  script(src = "/dist/JS/urlcontrol-min.js")
+  script(src = "/dist/JS/admin-review-min.js")
