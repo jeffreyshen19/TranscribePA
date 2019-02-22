@@ -189,7 +189,9 @@ router.get("/collections", auth, function(req, res) {
 
 router.get("/review/:id", auth, function(req, res) {
   Document.findOne({
-    _id: req.params.id
+    _id: req.params.id,
+    "verified": true,
+    "completed": false
   }, function(err, document){
     if(err) res.redirect("/404");
     else if(!document) res.render("admin/admin-review", {
@@ -202,40 +204,19 @@ router.get("/review/:id", auth, function(req, res) {
   });
 });
 
-router.get("/review", auth, function(req, res) {
-  res.render("admin/admin-review");
-});
-/*
-router.get('/', async function(req, res){
-
-  var filter = {
-    transcribed: false
+router.get("/review", auth, async function(req, res) {
+  filter = {
+    "verified": true,
+    "completed": false
   };
 
-  if(req.query.handwritten == "true") filter.handwritten = true;
-  else if(req.query.handwritten == "false") filter.handwritten = false;
-
-  if(req.query.languages && req.query.languages != "all") filter.languages = {"$all": [req.query.languages]};
-
-  if(req.query.collection) filter.collection_id = req.query.collection;
-
   try{
-    const [ count, languages, collections] = await Promise.all([
-      Document.countDocuments(filter),
-      Document.find(filter).distinct('languages'),
-      Collection.find()
-    ]);
-
+    const count= await Document.countDocuments(filter);
     const result = await Document.findOne(filter).skip(Math.floor(Math.random() * count)).exec();
-    const collection = await Collection.findOne({"_id": result.collection_id});
 
-    if(result) res.render("transcribe", {
+    if(result) res.render("admin/admin-review", {
       document: result,
-      languages: languages,
-      codeToName: languageCodeToName,
-      collections: collections,
-      collection: collection,
-      messages: req.flash('success-transcribe')
+      messages: req.flash('review-message')
     });
   }
   catch{
@@ -243,9 +224,8 @@ router.get('/', async function(req, res){
       document: null
     });
   }
-
 });
-*/
+
 // Mark as complete
 router.post("/review/accept", auth, function(req, res){
   Document.findOne({
