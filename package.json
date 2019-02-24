@@ -10,7 +10,8 @@
     "test": "mocha",
     "admin": "node app/scripts/create-admin.js",
     "bower": "bower",
-    "setup": "npm install && npm run bower install"
+    "setup": "npm install && npm run bower install",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
