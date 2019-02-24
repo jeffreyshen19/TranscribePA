@@ -9,7 +9,7 @@ html
     #container 
       include includes/nav.pug
       
-      header
+      header(style = "background-image:url('" + config.cover_img_url + "')")
         .overlay
         .text.is-centered.is-vcentered
           h1.is-size-1.is-serif=config.title

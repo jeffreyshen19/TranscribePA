@@ -13,5 +13,6 @@
   "favicon": "",
   "institution": "OWHL",
   "institution_url": "url",
-  "db_url": "mongodb://localhost/transcribe-pa"
+  "db_url": "mongodb://localhost/transcribe-pa",
+  "cover_img_url": "/uploads/name/StearnsCorrFolder1956_098B.jpg"
 }

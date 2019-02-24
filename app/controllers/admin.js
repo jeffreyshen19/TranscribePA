@@ -114,10 +114,9 @@ router.post("/settings/create", auth, function(req, res){
 });
 
 /*
-  Admin routes
+  Admin Main Dashboard
 */
 
-// Admin Dashboard
 router.get("/", auth, function(req, res) {
   Collection.find({}, function(err, collections) {
     Document.aggregate([{
@@ -174,13 +173,20 @@ router.get("/", auth, function(req, res) {
   });
 });
 
-// Manage collections
+/*
+  Manage Collections
+*/
+
 router.get("/collections", auth, function(req, res) {
   Collection.find({}, function(err, collections) {
     res.render("admin/admin-collections", {
       collections: collections
     });
   });
+});
+
+router.get("/collections/:id", auth, function(req, res) {
+  //req.params.id
 });
 
 /*
