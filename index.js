@@ -4,7 +4,7 @@ var mongoose = require("mongoose");
 var bodyParser = require('body-parser');
 var path = require('path');
 var passport = require("passport");
-require('./config/passport')(passport);
+require('./app/passport')(passport);
 var flash = require('connect-flash');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
