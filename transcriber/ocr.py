@@ -10,6 +10,8 @@ import json
 from spellCheck import SpellCheck
 
 from google.cloud import vision_v1p3beta1 as vision
+from google.oauth2 import service_account
+
 
 if len(sys.argv) < 3:
     sys.exit()
@@ -17,7 +19,8 @@ if len(sys.argv) < 3:
 ## Instantiates an image transcriber
 class ImageOCR:
     def __init__(self, corpus=[]):
-        self.client = vision.ImageAnnotatorClient()
+        credentials = service_account.Credentials.from_service_account_file("./service-keys.json")
+        self.client = vision.ImageAnnotatorClient(credentials=credentials)
         self.spellCheck = SpellCheck(corpus=corpus)
 
     def annotate(self, path, metadata):
