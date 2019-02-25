@@ -44,6 +44,16 @@ Then, in another shell, cd to the directory of TranscribePA and run `npm run sta
 
 ## Configuration
 
-* Customize various attributes (i.e. name of the website, contact information, and more) in config.json.
+* Customize various attributes (i.e. name of the website, contact information, and more) in config.json. See below for a breakdown of all fields in config.json:
+  * **title**: The name of the website (default: TranscribePA).
+  * **description**: A short website description (one sentence).
+  * **author**: The name of the website administrator.
+  * **email**: The email address users should contact.
+  * **social**: A list of social networks for the institution. "name" should be facebook, snapchat, instagram, or twitter (lowercase) and "url" should be the link to that social profile.
+  * **favicon**: The url of the website's favicon. Place image in /graphics and reference the path **excluding** /graphics from the path.
+  * **institution**: The name of the institution.
+  * **institution_url**: The main website of the institution.
+  * **db_url**: The url of the database. This shouldn't have to be changed, except for production.
+  * **cover_img_url**: The url of the home page's image. Place image in /graphics and reference the path **excluding** /graphics from the path.
 * All files in /markdown can be edited. These files (i.e. privacy policy, about page, etc.) are all written in markdown and will automatically be converted into HTML.
 * All styles can be edited. All styles are contained in /public/src/SCSS. In particular, to easily change colors and fonts, edit the definitions in `_theme.scss`. On changing styles, just run `gulp` in the root directory of TranscribePA.
