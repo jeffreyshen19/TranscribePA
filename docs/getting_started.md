@@ -40,7 +40,19 @@ On Windows:
 2. cd to `C:\Program Files\MongoDB\Server\[version]\bin`
 3. Run `./mongod`
 
-Then, in another shell, cd to the directory of TranscribePA and run `npm run start`.
+Then, in another shell, cd to the directory of TranscribePA and run `npm run start`. You can then visit the website at localhost:3000.
+
+## Creating admin accounts
+
+For security reasons, the first admin account must be created using the command line. To do this, start up the database and run the following command:
+
+```
+npm run admin
+```
+
+You will be prompted to enter a username, a name, and a password. Once successfully creating an admin account, you can log in to TranscribePA at /admin. There, you can upload collections, review transcriptions, and create or delete admin accounts using the web interface.
+
+Once one admin account is created, other accounts can be created at /admin/settings.
 
 ## Configuration
 
