@@ -1,6 +1,6 @@
 {
   "title": "TranscribePA",
-  "description": "Exercitation adipisicing est qui ut aliqua culpa non dolor magna commodo.",
+  "description": "Help us bring the OWHL into the 21st Century!",
   "author": "Author",
   "email": "example@example.com",
   "social": [{
@@ -14,5 +14,5 @@
   "institution": "OWHL",
   "institution_url": "url",
   "db_url": "mongodb://localhost/transcribe-pa",
-  "cover_img_url": "/uploads/name/StearnsCorrFolder1956_098B.jpg"
+  "cover_img_url": "cover.jpg"
 }

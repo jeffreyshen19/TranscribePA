@@ -6,19 +6,19 @@ html
     
     link(href = "/dist/CSS/main.css" rel = "stylesheet" type = "text/css")
   body
-    #container 
-      include includes/nav.pug
+    include includes/nav.pug
+    
+    header(style = "background-image:url('/graphics/" + config.cover_img_url + "')")
+      .overlay
+      .text.is-centered.is-vcentered
+        h1.is-size-1.is-serif= config.title
+        p.is-size-3 Help us bring the #{config.institution} into the 21st century!
+        br
+        br
+        a.button.is-blue.is-medium(href = "/transcribe" style = "margin-right: 5px") Get Started! 
+        a.button.is-medium(href = "/about") Learn More
       
-      header(style = "background-image:url('" + config.cover_img_url + "')")
-        .overlay
-        .text.is-centered.is-vcentered
-          h1.is-size-1.is-serif=config.title
-          p.is-size-3 Help us bring the #{config.institution} into the 21st century!
-          br
-          br
-          a.button.is-blue.is-medium(href = "/tutorial") Get Started! 
-      
-    include includes/footer.pug
+    //- include includes/footer.pug
     
     script(src = "/bower_components/jquery/dist/jquery.min.js")
     //- /* script(src = "/bower_components/typed.js/lib/typed.min.js") */
